@@ -247,7 +247,11 @@ Link to the issue and ask for explicit agreement. A reply agrees to the issue
 as it read when you asked. The human may edit the issue directly while
 reviewing, so read it again before every change and keep their edits:
 
-- After corrections, update the issue and say in a line or two what changed.
+- After corrections, work out what they open, as after any round's answers.
+  When they leave a product or scope choice open, the rounds start again:
+  ask first, round after round, and leave the issue as it is. Update the
+  issue once, after the last round, check it as in step 5, and say in a line
+  or two what changed. Corrections that open nothing go in straight away.
 - After agreement, do not change the spec without telling the human.
 
 The spec is ready when Build can design the approach without guessing about a

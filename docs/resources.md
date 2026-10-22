@@ -32,6 +32,14 @@ An opinionated software-development methodology packaged as composable agent
 skills. Study how it turns design discussion, planning, isolated execution,
 testing, review, and verification into behavior an agent is expected to follow.
 
+### [Agent Skills](https://github.com/addyosmani/agent-skills)
+
+A collection of engineering skills organized around a lifecycle of define,
+plan, build, verify, review, and ship, drawing on Google's engineering
+practices. Study how each skill pairs a step-by-step process with verification
+requirements and a list of excuses agents use to skip steps, and how
+specialist reviewer agents and shared checklists support the workflow.
+
 ### [Microsoft HVE Core: RPI](https://github.com/microsoft/hve-core/blob/main/docs/rpi/README.md)
 
 An evidence-led Research–Plan–Implement–Review lifecycle. Study its readiness

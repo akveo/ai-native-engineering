@@ -194,12 +194,14 @@ areas, the design addresses it explicitly, however small the change:
 
 The project's agent instructions may add areas to this list.
 
-Before asking for approval, check the design for a requirement that no part of
-the approach covers, an area above that it skips, a decision without a reason,
-a choice the plan would have to make that the reviewer would want to agree on,
-a product choice the spec does not contain, and code, file inventories, or a
-restated spec. When checking exposes a choice for the human, ask it as a new
-round first.
+### Check the design
+
+A fresh, read-only subagent checks the design before approval, because the
+writer of a design rarely cuts its own text. Give it the design, the spec, the
+design format, and the checklist in
+[references/review.md](references/review.md#design-check). Apply the findings
+once: cut what it marks, and add what it finds missing. When a finding exposes
+a choice for the human, ask it as a new round first.
 
 ## 4. Approve
 

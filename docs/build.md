@@ -75,7 +75,9 @@ addresses each of them explicitly, even when the answer is "no change". A
 project can add its own.
 
 Otherwise the design covers only what the engineer has to agree on, so it is
-short. A trivial change in one place gets a one-line approach and goes on
+short. The agent that wrote it rarely cuts its own text, so before approval a
+fresh agent that has not seen the conversation marks what retells the spec or
+does the plan's work. A trivial change in one place gets a one-line approach and goes on
 without waiting. The design stays in Build's working folder, not in the
 ticket, which holds the product.
 

@@ -63,10 +63,18 @@ person, not for the next agent.
 - Cite only the facts a decision rests on. No file lists or `file:line`
   inventories.
 - No code, pasted schemas, or interfaces. Describe them in words.
-- Do not restate the spec; refer to its requirements by number.
+- Do not restate the spec, not even in your own words. Say how the approach
+  meets a requirement and cite its number: "the account triggers keep R3",
+  not what R3 says.
+- A list of the rules the code enforces is the spec again: name the
+  requirements it keeps, and describe only how it keeps them.
+- A decision is a choice between alternatives. Behavior the spec already
+  fixes is not a decision: cite the requirement. An existing building block
+  with nothing to weigh gets one line, not a decision.
 - No empty sections.
-- Aim for one to three pages. A longer design is probably doing the plan's
-  work.
+- Aim for one to three pages. Length follows the decisions, not the size of
+  the spec, so a complex change may need all three; a longer design is
+  almost always retelling the spec or doing the plan's work.
 
 Number decisions (D1, D2) so that the plan and the reviews can refer to them.
 

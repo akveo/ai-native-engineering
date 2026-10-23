@@ -4,6 +4,38 @@ Each check runs in a fresh, read-only subagent. Give it the brief below and
 the inputs it names, and nothing else: not the conversation, and, except for
 the plan check, not the plan.
 
+## Design check
+
+Inputs: the design, the spec, the design format.
+
+The design is read by an engineer who has to approve it. Check that:
+
+- every requirement is covered by some part of the approach;
+- every area the design must address is addressed: security and access
+  control, data, external contracts, and building blocks;
+- every decision is a real choice between alternatives, with a reason;
+- no choice the reviewer would want to agree on is left to the plan;
+- the design makes no product choice the spec does not contain.
+
+Then mark every passage that does not belong:
+
+- the spec retold: a requirement in other words, or listed as the rules the
+  code enforces, where citing its number would do;
+- the plan's work: migration lists, column lists, the steps a function or
+  module performs, how work is split;
+- code, schemas, interfaces, file inventories, and code names no decision
+  rests on;
+- a "decision" that only adopts what the spec or an existing building block
+  already settles.
+
+A design longer than about three pages almost always has such passages, so
+look hardest there. Do not mark a passage only to shorten the design: a real
+choice, its reason, a fact it rests on, and a risk stay, however long the
+design gets.
+
+Report each problem with the passage or decision it concerns and what to
+change. Report nothing when the design is sound.
+
 ## Plan check
 
 Inputs: the plan, the spec, the design.

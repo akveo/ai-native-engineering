@@ -66,6 +66,14 @@ A plugin-based method for making each unit of engineering work improve later
 work. Study how it turns discoveries into better tests, documentation, tools,
 and reusable agent guidance.
 
+## Agent knowledge
+
+### [Open Knowledge Format](https://github.com/GoogleCloudPlatform/open-knowledge-format)
+
+Google Cloud's spec for agent-readable knowledge: Markdown files, one concept
+each, with YAML frontmatter and links between concepts. Study its v0.2 fields
+for provenance, verification, and staleness.
+
 ## Visual design
 
 ### [Impeccable](https://impeccable.style/)

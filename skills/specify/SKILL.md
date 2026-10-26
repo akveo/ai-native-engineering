@@ -58,12 +58,12 @@ off before the draft is written, run the skill again on the issue.
 
 ## 1. Investigate before asking
 
-Facts are your job. Before asking anything, read the relevant code, the
-glossary and the architecture decisions that concern the area if the project
-has them, project documentation, related tickets, and history such as blame
-and linked pull requests. Use the glossary's terms throughout. Never ask the
-human something the code can answer; it wastes their attention on the part of
-the work you can do yourself.
+The human's attention is for decisions, not for facts you can find. Before
+asking anything, read the relevant code, the glossary and the architecture
+decisions that concern the area if the project has them, project documentation,
+related tickets, and history such as blame and linked pull requests. Use the
+glossary's terms throughout. Never ask the human something the code can answer;
+it spends their time on the part of the work you can do yourself.
 
 Keep the investigation bounded to what the request needs. Exploring the whole
 system is not specifying.
@@ -74,10 +74,10 @@ unreviewable. Offer to open a separate issue for it at the end.
 
 ## 2. Present your understanding
 
-Write back what you now believe, so the human can confirm or correct it: how
-the system behaves today, described as users see it. Give code evidence, such
-as file and line, only when the human asks for it. Label existing behavior as
-context, not as a new requirement. When you rely on something you could not
+Tell the human how the system behaves today, described as users see it, so they
+can correct a misreading before the questions build on it. Give code evidence,
+such as file and line, only when the human asks for it. Label existing behavior
+as context, not as a new requirement. When you rely on something you could not
 check, such as an external service's behavior, mark it as an assumption and say
 who could confirm it.
 
@@ -95,18 +95,18 @@ alternative to take in goals, scope, or trade-offs. These are the human's
 decisions. Do not ask what the evidence settles, such as existing behavior,
 or how the change will be built: that is Build's.
 
-Decisions hang off each other: an answer opens new questions and closes others.
-So ask in rounds. A round holds every open question whose prerequisites are
-settled, the ones you can ask now without guessing at answers you have not
-heard. A question that depends on another question still open waits for a
-later round.
+Answers change the questions: one answer raises new ones and makes others moot.
+So ask in rounds. Each round asks every open question that you can already word
+and give options for. A question waits for a later round when the answer to
+another open question could change its wording or options, or make it
+unnecessary.
 
-Give every question a number, a short title, and your recommended answer on a
-line of its own. Write it as a question, worded so that "yes" accepts the
-recommendation, not as a statement, and in terms of what users see, without
-code names or how data is loaded. For a real choice, name the alternatives and
-what each would change. Put the questions that matter most first. When the
-evidence supports no recommendation, say so.
+Number each question, give it a short title, and put your recommendation on a
+line of its own. Phrase it as a question that proposes the recommendation, so
+the human can take it with a plain "yes". Use the terms of what users see,
+without code names or how data is loaded. For a real choice, name the
+alternatives and what each would change. Put the questions that matter most
+first. When the evidence supports no recommendation, say so.
 
 > **Q1. Shipped orders.** Should lines follow the same rule as whole orders,
 > so a line cannot be cancelled once the order has shipped? A shipped order
@@ -120,8 +120,8 @@ evidence supports no recommendation, say so.
 >
 > → Yes, right away. A credit can be a separate request.
 
-The human can answer the whole round by number. A reply such as "all good
-except 2" accepts the rest.
+The human can reply to each question by its number. A reply such as "all
+good except 2" accepts the rest.
 
 After each round, work out what the answers opened. An answer that widens or
 moves the scope usually raises new questions: who sees what, edge cases, and
@@ -129,17 +129,19 @@ what happens to the behavior around it. Ask them as the next round. A product
 choice you settle on your own, even as an assumption or a proposal, is a
 decision the human never made.
 
-The rounds end when no product or scope choice is left open or assumed. Many
+The rounds end when every product or scope choice has the human's answer or,
+when nobody present can decide it, is recorded as an open question. Many
 questions are fine; many rounds are not. If the rounds keep coming, the request
 is probably too big: propose slicing it. When nobody present can decide a
 question, note it as an open question for the spec, say whether it blocks
 implementation, and move on.
 
-When a question needs a fact you do not have yet, look it up instead of asking;
-a subagent can do it while you ask the questions that do not depend on it. For
-an external fact, such as what a partner service allows, use a primary source,
-such as its official documentation, and put the link under References in the
-spec. What you could not confirm stays an assumption.
+When a question needs a fact you do not have yet, find it yourself rather than
+asking. When the lookup takes a while, a subagent can run it while you go on
+with the questions that do not need the fact. For an external fact, such as
+what a partner service allows, use a primary source, such as its official
+documentation, and put the link under References in the spec. What you could
+not confirm stays an assumption.
 
 ### Slices
 
@@ -198,8 +200,8 @@ it after every round, and makes the human read content that is about to
 change. Write each paragraph and each list item on one line: the tracker shows
 every line break, so a hard-wrapped spec reads as broken lines.
 
-Mark assumptions and open questions as such in the spec. Silence is not
-agreement: an assumption the human has not confirmed stays an assumption.
+Mark assumptions and open questions as such in the spec. An assumption stays
+an assumption until the human confirms it; not objecting is not confirming.
 
 ## 5. Check the draft
 

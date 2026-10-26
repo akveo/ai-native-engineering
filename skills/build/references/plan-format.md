@@ -37,12 +37,15 @@ Ticket: link, or the confirmed description of a small change
 
 ## Writing tasks
 
-- A task is the smallest unit with its own check. A task without a check
-  cannot be called done.
+- Make each task as small as it can be while still having a check of its
+  own. A task without a check cannot be called done.
 - Refer to the spec's requirements (R1) and the design's decisions (D1) by
   number instead of repeating them.
-- "Depends on" decides what can run in parallel: tasks that share files,
-  contracts, migrations, lockfiles, or generated files depend on each other.
+- "Depends on" decides what can run in parallel. Two tasks depend on each
+  other when they touch the same files or interfaces, when either changes the
+  database schema or the dependencies, when one uses code the other
+  regenerates, or when both need the same running service, such as a
+  development server or a database.
 - Put preparatory refactoring first, then the behavior, then the clean-up.
 - No implementation code. Describe the change; the task's subagent writes it.
 

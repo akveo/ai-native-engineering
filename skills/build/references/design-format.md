@@ -33,7 +33,8 @@ structure. Interface and data changes described in words.
 
 ### Risks
 
-- A risk → its mitigation. Include migration and rollback when relevant.
+- A risk, and how the design limits it. Include migration and rollback when
+  relevant.
 
 ### Not in this design
 

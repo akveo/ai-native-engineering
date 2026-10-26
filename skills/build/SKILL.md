@@ -155,11 +155,11 @@ Ask the human only about:
 - a new dependency or a new pattern in the codebase.
 
 Open the first round with the approach in one or two sentences, so the
-questions have a frame. Then ask in rounds: a round holds every question whose
-prerequisites are settled. Give every question a number, a short title, and
-your recommended answer on a line of its own. Write it as a question, worded so
-that "yes" accepts the recommendation. Name the alternatives and what each
-would cost.
+questions have a frame. Then ask in rounds: each round asks every open
+question that does not wait on the answer to another. Number each question,
+give it a short title, and put your recommendation on a line of its own.
+Phrase it as a question that proposes the recommendation, so the human can
+take it with a plain "yes". Name the alternatives and what each would cost.
 
 > **Q1. Where the filter runs.** Should the project filter run in the browser
 > on the rows already loaded, like the person search? Filtering on the server
@@ -209,9 +209,9 @@ Link to `design.md` and ask for explicit approval in one message that also
 lists what will change outside the code, so one confirmation covers it:
 
 - product answers from step 1, to add to the spec in the issue;
-- ADRs to write, for decisions that are hard to reverse, surprising without
-  context, and the result of a real trade-off. They ship as files in this
-  pull request;
+- ADRs to write, for a decision that was chosen over a real alternative,
+  would be costly to change later, and that a future reader could not work
+  out from the code alone. They ship as files in this pull request;
 - problems found outside the request, as issues to open;
 - a warning when the change looks too big for one pull request.
 
@@ -224,13 +224,15 @@ confirmed changes to the issue, and from here on ask nothing.
 Read [references/plan-format.md](references/plan-format.md) for the format.
 The plan says what will change in the codebase and how, as a list of tasks:
 
-- a task is the smallest unit with its own check;
+- split the work into the smallest pieces that can each be checked on their
+  own;
 - every requirement, design decision, ADR, and glossary change in the spec or
   the design has a task;
 - a coding standard that clearly concerns a task goes into the plan's
   constraints, so the task gets it right the first time;
-- no implementation code: a plan longer than the code it describes has written
-  the code instead;
+- no implementation code: say what changes and where, and leave the code to
+  the task. When a task's description grows toward the size of its code, cut
+  it back;
 - no choices the reviewer would have wanted to agree on. If the plan needs
   one, stop: the design needs another look with the human.
 
@@ -249,9 +251,11 @@ the plan's constraints, the findings that concern it, what earlier tasks
 produced, and where to find the spec and the design. It does not receive the
 whole plan or this conversation.
 
-Run tasks in series by default. Run them in parallel only when they share no
-files, contracts, migrations, lockfiles, generated files, or runtime resources
-such as a development server or database. Run at most three at once. When in
+Run tasks in series by default. Run them in parallel only when they cannot
+get in each other's way: they touch different files and interfaces, neither
+changes the database schema or the dependencies, neither regenerates code
+the other uses, and they do not need the same running service, such as a
+development server or a database. No more than three at a time. When in
 doubt, run in series.
 
 After each task:
@@ -262,9 +266,9 @@ After each task:
 3. Record the task as done in the plan's progress, with anything the next
    session would need to know. Record nothing before the result is in.
 
-When the same failure survives two fixes, stop patching and try a different
-approach: more context, a stronger model, or a smaller task. If that fails
-too, stop.
+If a failure is still there after two attempts to fix it, a third patch
+will not help. Change the approach: give the subagent more context, use a
+stronger model, or split the task. If it still fails, stop.
 
 ## 8. Handle what you discover
 

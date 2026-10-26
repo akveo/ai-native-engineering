@@ -24,7 +24,7 @@ than quoting long code.
 
 ### 1. Order totals are computed in three places
 
-**Strength:** Strong
+**Impact:** High
 
 **Where:** `src/orders/checkout.ts:40`, `src/orders/refund.ts:112`,
 `src/admin/order-view.ts:27`
@@ -76,7 +76,7 @@ settled first, so the move does not pick a rule by accident.
   repeated. Not capped,
   not counted toward the candidates. Leave the section out when there are
   none.
-- **Candidates:** at most five, strongest first. Mark a candidate from an
+- **Candidates:** at most five, most valuable first. Mark a candidate from an
   earlier report as repeated. With no candidates, write "No candidates in
   this area." and keep the other sections.
 - **Since the last report:** the possible defects and candidates from this

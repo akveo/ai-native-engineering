@@ -88,23 +88,27 @@ a large area, subagents can read separate parts in parallel.
 
 Look for friction that the next change in this area would hit:
 
-- **Shallow modules:** an interface nearly as complex as what it hides, so
-  callers carry the complexity anyway.
-- **Leaky seams:** callers that must know ordering rules, invariants, failure
-  modes, or configuration that the module should own.
-- **Scattered logic:** one concept spread across many small modules, so a
-  change bounces between them.
+- **Shallow modules:** a module whose callers must know almost as much as its
+  implementation does, so it saves them little.
+- **Leaking responsibilities:** callers that must call things in a set order,
+  keep the module's data consistent, handle its errors, or configure it,
+  when the module should take care of that itself.
+- **Scattered logic:** one concept split across many small modules, so a
+  single change touches several of them and understanding it means reading
+  them all.
 - **Speculative structure:** an abstraction, an interface, or an extension
-  point with one implementation and no current need. One adapter is a
-  hypothetical seam; two make it real.
-- **Code that is hard to test** through its own interface, so tests reach
-  into internals or mock what they should not.
+  point with one implementation and no current need. A single implementation
+  is a guess about the future; a second real one, such as a test double the
+  tests use, makes the interface worth keeping.
+- **Code that is hard to test** without reaching inside: tests depend on
+  internals or mock what they should not.
 - **Duplication** of behavior, not of shape: the same rule implemented twice,
   where a change to one must be repeated in the other.
 
-Apply the deletion test to each suspect: imagine removing the module or the
-abstraction. If the complexity disappears, it was not earning its place; if
-it spreads to the callers, it was.
+Test each shallow or speculative suspect by imagining it removed, with its work
+moved into the callers. If almost nothing has to move, it was a pass-through
+and cost more than it gave; if each caller would take on real complexity, it
+was doing its job.
 
 Do not flag:
 
@@ -139,11 +143,12 @@ work out:
 - **What gets easier:** which changes become simpler, what callers no longer
   need to know, how testing improves.
 - **Cost:** what the change touches and what could break.
-- **Strength:** `Strong` (the evidence is clear and the payoff is near),
-  `Worth exploring` (real friction, unclear payoff), or `Speculative`.
+- **Impact:** `High` (the evidence is clear and the payoff is near),
+  `Medium` (real friction, unclear payoff), or `Low` (the payoff depends
+  on changes that may never come).
 
-Rank the candidates by value, strongest first, and keep at most five. If the
-area has more, keep the five most valuable and say that there were more.
+Rank the candidates by value, most valuable first, and keep at most five. If
+the area has more, keep the five most valuable and say that there were more.
 Finding nothing worth changing is a valid result; never invent a candidate to
 fill the report.
 

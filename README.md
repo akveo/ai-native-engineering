@@ -58,10 +58,11 @@ testing the running system, exploring an unclear goal, and prototyping.
 
 ## Resources
 
-The [resources page](docs/resources.md) lists the projects, skills, and techniques
-we learned from. Many have useful ideas this guide does not cover, so look
-there for something that fits your project, and suggest a resource you found
-helpful.
+The [resources page](docs/resources.md) lists the projects, skills, and
+techniques we learned from. Our skills draw on ideas from several of them,
+especially Matt Pocock's skills, Superpowers, Compound Engineering, OpenSpec,
+and BMad Method. Many have useful ideas this guide does not cover, so look there
+for something that fits your project, and suggest a resource you found helpful.
 
 ## Contributing
 

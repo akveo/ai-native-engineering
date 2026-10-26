@@ -1,0 +1,5 @@
+interface:
+  display_name: "Build"
+  short_description: "Turn an agreed spec into reviewed code"
+policy:
+  allow_implicit_invocation: false

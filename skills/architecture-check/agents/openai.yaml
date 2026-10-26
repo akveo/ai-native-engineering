@@ -1,0 +1,5 @@
+interface:
+  display_name: "Architecture check"
+  short_description: "Report structural improvements in one area"
+policy:
+  allow_implicit_invocation: false

@@ -1,7 +1,8 @@
 ---
 name: architecture-check
-description: Recurring, unattended check that looks at one area of the codebase for structural improvements, such as shallow modules, leaky seams, and code that is hard to change or test, and writes them as evidence-backed candidates to a dated report file in the repository. Never asks questions and changes no code. Optional argument names the area.
+description: Checks one area of the codebase for structural improvements, such as shallow modules, leaky seams, and code that is hard to change or test, and writes them to a dated report. Runs unattended and changes no code.
 argument-hint: "[area or direction]"
+disable-model-invocation: true
 ---
 
 # Architecture check

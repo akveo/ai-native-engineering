@@ -22,10 +22,8 @@ Start with the check that answers a real need, not with the whole list.
 - **Architecture:** structure that makes the next change harder, such as
   shallow modules, leaky seams, and logic spread across many places. The
   [architecture check](../skills/architecture-check/SKILL.md) skill does this.
-  Copy the [`skills/architecture-check`](../skills/architecture-check)
-  folder into your agent's skills folder, such as `.claude/skills/` for
-  Claude Code or `.agents/skills/` for Codex. Then run it on one area, or
-  without one and it picks an area itself:
+  [Install the skills](install.md), then run it on one area, or without one
+  and it picks an area itself:
 
   ```
   /architecture-check src/orders

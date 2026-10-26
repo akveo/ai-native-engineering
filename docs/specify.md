@@ -6,9 +6,7 @@ runs it. This guide explains why it exists and why it works the way it does.
 
 ## How to use it
 
-Copy the [`skills/specify`](../skills/specify) folder into your agent's skills
-folder, such as `.claude/skills/` for Claude Code or `.agents/skills/` for
-Codex. Then run the skill on a raw ticket:
+[Install the skills](install.md), then run the skill on a raw ticket:
 
 ```
 /specify 142

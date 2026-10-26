@@ -1,0 +1,14 @@
+{
+  "name": "ai-native-engineering",
+  "owner": {
+    "name": "Akveo"
+  },
+  "description": "Akveo's AI-Native Engineering skills.",
+  "plugins": [
+    {
+      "name": "ai-engineering",
+      "source": "./",
+      "description": "Skills that put the AI-Native Engineering workflows into practice: agents do the work between the decisions people make."
+    }
+  ]
+}

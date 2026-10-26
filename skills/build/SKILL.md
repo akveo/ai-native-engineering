@@ -1,6 +1,6 @@
 ---
 name: build
-description: Turns an agreed spec in an issue, or a short description of a small, obvious change, into working, reviewed code. Agrees the technical design with the human, unless the change is trivial, then builds it without a human watching — a plan, tasks run in fresh subagents, and independent spec and code reviews with validated fixes. Leaves the changes in the working tree. Does not commit or open a pull request.
+description: Turns an agreed spec, or a small, obvious change, into working, reviewed code. Agrees the technical design with an engineer, then plans, builds, and reviews the change without a human watching. Leaves the changes uncommitted.
 argument-hint: "[issue number | small change description]"
 disable-model-invocation: true
 ---

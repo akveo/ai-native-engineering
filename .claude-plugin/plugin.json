@@ -1,0 +1,9 @@
+{
+  "name": "ai-engineering",
+  "version": "0.1.0",
+  "description": "Skills that put the AI-Native Engineering workflows into practice: agents do the work between the decisions people make.",
+  "author": {
+    "name": "Akveo"
+  },
+  "repository": "https://github.com/akveo/ai-native-engineering"
+}

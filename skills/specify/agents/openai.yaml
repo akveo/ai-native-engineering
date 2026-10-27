@@ -1,0 +1,5 @@
+interface:
+  display_name: "Specify"
+  short_description: "Turn an issue or idea into an agreed spec"
+policy:
+  allow_implicit_invocation: false

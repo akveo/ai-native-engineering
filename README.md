@@ -48,6 +48,11 @@ as architecture that drifts or terms that stop matching the code. Agents look
 for them regularly, and people decide what to fix.
 [Read more](docs/recurring-checks.md).
 
+## Install the skills
+
+Install the skills as one plugin for Claude Code or Codex, or copy them into
+your project to adapt them. [Read more](docs/install.md).
+
 ## Tailor it to your project
 
 As you adopt it, keep the main idea in place: people make the product

@@ -13,45 +13,43 @@ you can start with. Adapt it to your needs.
 
 ## Practices and workflows
 
-### Project context
+### [Project context](docs/project-context.md)
 
 Gives every agent session what it needs to know about the project: what it
 is, the terms it uses, the architecture decisions behind it, and the coding
 standards. It starts with one agent instructions file, such as `AGENTS.md` or
 `CLAUDE.md`, that links to the rest, and is updated whenever an agent gets
 something wrong for lack of context.
-[Read more](docs/project-context.md).
 
-### Ticket tracking
+### [Ticket tracking](docs/ticket-tracking.md)
 
 Keeps each piece of work in a ticket that always shows the current request and
 what happens next, so people and agents can see the state of the work at a
-glance. [Read more](docs/ticket-tracking.md).
+glance.
 
-### Specify
+### [Specify](docs/specify.md)
 
 The product side of the work, before any code is written. An agent works with
 the person who owns the outcome to settle what should change, for whom, and
 how to tell it is done, and writes this into the ticket as a spec.
-[Read more](docs/specify.md).
 
-### Build
+### [Build](docs/build.md)
 
 The technical side of the work. An agent proposes a technical design, and once
 an engineer approves it, plans the work, writes the code, and has it reviewed
-by independent agents, without a human watching. [Read more](docs/build.md).
+by independent agents, without a human watching.
 
-### Recurring checks
+### [Recurring checks](docs/recurring-checks.md)
 
 Catch problems that no single change shows but that build up over time, such
 as architecture that drifts or terms that stop matching the code. Agents look
 for them regularly, and people decide what to fix.
-[Read more](docs/recurring-checks.md).
 
 ## Install the skills
 
 Install the skills as one plugin for Claude Code or Codex, or copy them into
-your project to adapt them. [Read more](docs/install.md).
+your project to adapt them. The [install instructions](docs/install.md) cover
+both.
 
 ## Tailor it to your project
 

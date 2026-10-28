@@ -1,6 +1,6 @@
 ---
 name: specify
-description: Turns an issue, an idea, or the current conversation into an agreed product spec in the issue: the desired outcome, requirements with acceptance examples, and scope. Asks the human until nothing is assumed, and splits work too big for one pull request into slices. Run it before Build.
+description: "Turns an issue, an idea, or the current conversation into an agreed product spec in the issue: the desired outcome, requirements with acceptance examples, and scope. Asks the human until nothing is assumed, and splits work too big for one pull request into slices. Run it before Build."
 argument-hint: "[issue number | idea description]"
 disable-model-invocation: true
 ---

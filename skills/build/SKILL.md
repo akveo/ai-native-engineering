@@ -251,6 +251,12 @@ the plan's constraints, the findings that concern it, what earlier tasks
 produced, and where to find the spec and the design. It does not receive the
 whole plan or this conversation.
 
+The numbers of requirements, decisions, and tasks (R9, D3, T2) exist only in
+the spec and Build's working folder, and the folder is deleted once the ticket
+is done. Code, comments, tests, and other files the change ships never cite
+them: a comment says the reason in its own words. Tell each subagent so.
+Issue numbers and ADRs are permanent and may be cited where they help.
+
 Run tasks in series by default. Run them in parallel only when they cannot
 get in each other's way: they touch different files and interfaces, neither
 changes the database schema or the dependencies, neither regenerates code

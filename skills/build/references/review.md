@@ -70,6 +70,10 @@ project? Look for bugs, unhandled failure and boundary cases, missing or weak
 tests, security problems, and code that ignores the project's existing
 patterns or components.
 
+Report code, comments, or tests that cite a requirement, decision, or task
+number (R9, D3, T2) or Build's working files: these disappear after the
+ticket, so the reference cannot be followed. The reason belongs in words.
+
 Check the change against every coding standard that applies to it, and name
 the rule in each finding against one. A documented standard overrides general
 taste: do not report code that follows a standard, even when you would write

@@ -40,7 +40,8 @@ Ticket: link, or the confirmed description of a small change
 - Make each task as small as it can be while still having a check of its
   own. A task without a check cannot be called done.
 - Refer to the spec's requirements (R1) and the design's decisions (D1) by
-  number instead of repeating them.
+  number instead of repeating them. The numbers stay in the plan: the code
+  a task writes never cites them.
 - "Depends on" decides what can run in parallel. Two tasks depend on each
   other when they touch the same files or interfaces, when either changes the
   database schema or the dependencies, when one uses code the other

@@ -133,10 +133,15 @@ and add a section that maps them to slices:
 On agreement, the spec is divided:
 
 - **The parent issue** keeps the title, the problem, the desired outcome, the
-  scope, and the slices with links to the sub-issues. It is done when its
-  outcome holds, not just when every slice is closed.
+  scope, and the slices with links to the sub-issues. The requirements and
+  their acceptance move to the slices and leave the parent, so each one has a
+  single home; the slice list describes each slice in words, without
+  requirement numbers. The parent is done when its outcome holds, not just
+  when every slice is closed.
 - **Each slice** becomes a sub-issue whose body is its own spec: a title, a
-  line linking the parent for context, and its requirements with their
-  acceptance, numbered as in the full spec. Add slice-specific scope when it
-  matters, such as what a later slice will add. Build reads the slice as its
-  spec and the parent only for context.
+  line linking the parent for context only, and its requirements with their
+  acceptance, numbered as in the full spec. A requirement that applies to
+  several slices is written out in each, scoped to that slice, so every slice
+  is complete on its own. Add slice-specific scope when it matters, such as
+  what a later slice will add. Build reads the slice as its spec and the
+  parent only for context.

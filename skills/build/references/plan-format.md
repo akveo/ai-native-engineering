@@ -5,9 +5,9 @@ the plan check, and it stays in the folder after Build, so a later session can
 see what was done.
 
 ```md
-# Plan: ticket title
+# Plan: short name of the work
 
-Ticket: link, or the confirmed description of a small change
+Spec: where it lives, as a link or a path
 
 ## Constraints
 

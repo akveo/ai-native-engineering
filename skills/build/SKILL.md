@@ -1,16 +1,16 @@
 ---
 name: build
-description: Turns an agreed spec, or a small, obvious change, into working, reviewed code. Agrees the technical design with an engineer, then plans, builds, and reviews the change without a human watching. Leaves the changes uncommitted.
-argument-hint: "[issue number | small change description]"
+description: Turns an agreed spec, or a description of an obvious change, into working, reviewed code, and sends anything less settled back to specifying. Agrees the technical design with an engineer, then plans, builds, and reviews the change without a human watching. Leaves the changes uncommitted.
+argument-hint: "[description, path, link, or issue number]"
 disable-model-invocation: true
 ---
 
 # Build
 
 Turn an agreed spec into working, reviewed code. One run produces the work for
-one pull request: the whole spec, or one slice.
+one pull request.
 
-The issue holds the product; Build settles the technical side and delivers
+The spec holds the product; Build settles the technical side and delivers
 it. Build has two halves:
 
 - **With the human:** check the input, investigate, design the approach, and
@@ -22,7 +22,7 @@ it. Build has two halves:
   stop when a choice belongs to someone else. A stop with a clear reason is a
   good result; a guess that reaches review is not.
 
-Build works from the issue and the design alone. If this conversation already
+Build works from the spec and the design alone. If this conversation already
 holds other work, suggest starting a fresh session before going on: earlier
 discussion distracts and can carry choices nobody agreed to.
 
@@ -35,36 +35,30 @@ design or the plan into the chat: link to the files.
 
 ## Input
 
-`$ARGUMENTS` is one of:
+`$ARGUMENTS` says what to build: a description in the chat, from a one-line
+change to a full spec, or where to find one: a file, a link, or an issue
+number. Read it where it lives, with whatever it links to and any discussion
+kept beside it, such as an issue's comments. Whatever it is, it is the spec
+everywhere below, and step 1 decides whether it is enough to build from.
+Without an argument, ask what to build.
 
-- **An issue number or URL.** Read the issue, its comments, and its linked
-  issues.
-- **A description** of a small, obvious change, such as "fix the date
-  picker's default date". There is no issue. Restate the outcome and its check
-  in a line or two and confirm them before going on; the confirmed outcome
-  stands in for the spec everywhere below, and steps that change the issue are
-  skipped. If the change needs a product
-  decision or more than one pull request, it is not obvious: suggest creating
-  an issue and running the specify skill on it, and stop.
-- **Nothing.** Ask for an issue or a description.
-
-A **slice** is a sub-issue whose body is its own spec: build what it says.
-Read the parent for context only, such as the overall outcome and what earlier
-slices delivered. A **parent with slices** is never built itself: list its
-open slices, suggest the next one whose dependencies are done, and stop.
-
-Also read the architecture decisions and glossary terms that concern the area,
-and the project's coding standards, where the project has them.
-
+When the spec belongs to larger work, such as an issue with a parent, read
+the larger work for context only, such as the overall outcome and what is
+already built. Build what the spec says.
 ## Working folder
 
-Build keeps its work in `.work/<number>-<slug>/` at the repository root, or
-`.work/<slug>/` without an issue, and creates the folder on its first run. If
-`.work/` is not ignored by git, add it to `.gitignore` and tell the human.
+Build keeps its work in `.work/<slug>/` at the repository root, named after
+the work, such as `.work/date-picker-default/`. When the spec has an issue
+number, the slug starts with it, such as `.work/142-empty-report-export/`.
+Before creating a folder, look in `.work/` for one that belongs to the same
+work, and continue there. If `.work/` is not ignored by git, add it to
+`.gitignore` and tell the human.
 
-The spec in the issue is the input; Specify leaves nothing else. The folder
-holds:
+The folder holds:
 
+- **`spec.md`:** the spec, as confirmed in step 1, only when it lives
+  nowhere else, such as text in the chat. Subagents and a later session read
+  it here; a spec that lives elsewhere is read where it lives.
 - **`design.md`:** the design.
 - **`plan.md`:** the plan with its progress, so a fresh session can resume
   where Build stopped.
@@ -73,35 +67,37 @@ Write every file so that it reads without the conversation. The plan is
 written only after approval, so an existing `plan.md` means the design is
 approved: check the working tree against its progress and continue from the
 first unfinished task. With only `design.md`, show it again and ask for
-approval. The folder is deleted once the ticket is done; Build does not
+approval. The folder is deleted once the change is merged; Build does not
 delete it.
 
 ## 1. Check the input
 
-Build can start when the ticket says what the outcome is and how it will be
-checked: usually an agreed spec. A ticket for an obvious change may skip
-specifying and carry only the outcome and its check; that means no product
-decision is needed.
+Build can start when the input says what the outcome is and how it will be
+checked: usually an agreed spec. An obvious change needs no more than its
+outcome and its check, such as "exporting an empty report no longer fails; a
+regression test covers it". When a short description leaves them implicit,
+such as "fix the date picker's default date", restate the outcome and its
+check in a line or two and confirm them before going on; the confirmed
+outcome is the spec from here on.
 
 Look for open product questions before investigating how to build: list what
-the user will see, and check that the ticket settles each item. Typical gaps
+the user will see, and check that the input settles each item. Typical gaps
 are which options are offered, defaults, empty and error states, what is kept
 or cleared, who can see what, and what exports and counts include.
 
 Send the work back to specifying instead of asking when:
 
-- the ticket does not state the outcome and how it will be checked;
+- the outcome or how it will be checked is unclear, and one confirmation
+  would not settle it;
 - more than a few product questions are open;
 - an open question would change the scope or the expected result.
 
-Say what is missing, suggest running the specify skill on the issue, and
-on confirmation mark specifying as its next action, as the project's ticket
-tracking describes; without a ticket tracking file, only say so. Then stop.
+Say what is missing, suggest running the specify skill on it, and stop.
 
 When only a few small product questions are open, ask them first, marked as
-product questions, in the format of step 3. The answers belong in the spec in
-the issue, not in the design; update it on the human's confirmation at
-approval. The spec is never changed quietly.
+product questions, in the format of step 3. The answers belong in the spec,
+not in the design; add them where the spec lives on the human's confirmation
+at approval. The spec is never changed quietly.
 
 ## 2. Investigate
 
@@ -128,7 +124,7 @@ For larger work, subagents can explore separate areas in parallel. What you
 find goes into the design, where a decision rests on it, and into the plan: its
 constraints and each task's files and check carry what a fresh session needs.
 When you find a problem outside the request, keep it out of the change and
-mention it at approval, so the human can open an issue for it.
+mention it at approval, so the human can decide what to do with it.
 
 ## 3. Design
 
@@ -172,10 +168,10 @@ decision in the design. The rounds end when no open question would change the
 approach. When a question cannot be settled by talking, such as how slow a
 query really is, say so and propose a short spike instead of guessing.
 
-Build does not split work; slicing is a product decision made in Specify. When
-the change looks too big for one reviewable pull request, say so at approval:
-the human decides whether to go on as one pull request or to send the work
-back to specifying to slice it further.
+Build does not split work; how to split it is a product decision. When the
+change looks too big for one reviewable pull request, say so at approval: the
+human decides whether to go on as one pull request or to send the work back
+to specifying to split it.
 
 ### Write the design
 
@@ -208,16 +204,16 @@ a choice for the human, ask it as a new round first.
 Link to `design.md` and ask for explicit approval in one message that also
 lists what will change outside the code, so one confirmation covers it:
 
-- product answers from step 1, to add to the spec in the issue;
+- product answers from step 1, to add to the spec;
 - ADRs to write, for a decision that was chosen over a real alternative,
   would be costly to change later, and that a future reader could not work
   out from the code alone. They ship as files in this pull request;
-- problems found outside the request, as issues to open;
+- problems found outside the request, for the human to follow up;
 - a warning when the change looks too big for one pull request.
 
 End the message with: "Approve, and I'll run the rest without you." After
 corrections, update the design and ask again. After approval, make the
-confirmed changes to the issue, and from here on ask nothing.
+confirmed changes to the spec, and from here on ask nothing.
 
 ## 5. Write the plan
 
@@ -252,10 +248,10 @@ produced, and where to find the spec and the design. It does not receive the
 whole plan or this conversation.
 
 The numbers of requirements, decisions, and tasks (R9, D3, T2) exist only in
-the spec and Build's working folder, and the folder is deleted once the ticket
-is done. Code, comments, tests, and other files the change ships never cite
+the spec and Build's working folder, and the folder is deleted once the change
+is merged. Code, comments, tests, and other files the change ships never cite
 them: a comment says the reason in its own words. Tell each subagent so.
-Issue numbers and ADRs are permanent and may be cited where they help.
+ADRs and other permanent references may be cited where they help.
 
 Run tasks in series by default. Run them in parallel only when they cannot
 get in each other's way: they touch different files and interfaces, neither
@@ -331,7 +327,7 @@ step 8.
 2. Mark the plan as finished in its progress.
 3. Update `design.md` to what was built, if the build changed anything.
 
-Do not change the issue or its next action after approval. Do not commit or
+Do not change the spec after approval. Do not commit or
 open a pull request. End with the outcome in a line or two, a link to
 `design.md`, and only what exists of: choices Build made that are not obvious
 from the code, review findings left unresolved, and problems noticed but not

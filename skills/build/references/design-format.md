@@ -1,7 +1,7 @@
 # Design format
 
 The design lives in `design.md` in Build's working folder. The human approves
-it before Build runs on its own. It never goes into the issue. Every design
+it before Build runs on its own. It never goes into the spec. Every design
 starts with the summary. The other sections are used only when the work needs
 them, in this order:
 

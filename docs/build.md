@@ -7,18 +7,19 @@ exists and why it works the way it does.
 
 ## How to use it
 
-[Install the skills](install.md), then run the skill on a ticket in a fresh
-session:
+[Install the skills](install.md), then run the skill on a spec in a fresh
+session. Build does not care where the spec lives: point it at a ticket, a
+file, or a link, or paste the spec into the chat:
 
 ```
 /build 142
 ```
 
-The ticket usually holds a spec agreed in [Specify](specify.md), or one slice
-of it. A small, obvious change can skip Specify. Its ticket only needs to state
-the outcome and its check, such as "Exporting an empty report no longer fails;
-a regression test covers it". Or skip the ticket too and describe the change.
-The skill confirms the outcome and its check before going on:
+The spec is usually one agreed in [Specify](specify.md), or one slice of it. A
+small, obvious change can skip Specify and only state the outcome and its
+check, such as "Exporting an empty report no longer fails; a regression test
+covers it". Or just describe the change. The skill confirms the outcome and its
+check before going on:
 
 ```
 /build Fix the date picker's default date
@@ -26,8 +27,8 @@ The skill confirms the outcome and its check before going on:
 
 Start each build in a fresh session. Earlier discussion in the same session
 distracts the agent and can carry choices nobody agreed to. Build should work
-only from the ticket, or the confirmed description, and the technical design
-it agrees with the engineer.
+only from the spec, or the confirmed description, and the technical design it
+agrees with the engineer.
 
 ## Why it exists
 
@@ -60,7 +61,7 @@ dependency. The engineer's time goes to judgement, not to facts.
 
 A design that answers product questions makes product decisions nobody agreed
 to, and how the code works today never settles how new behavior should look.
-So Build first checks that the ticket settles what users will see. A small gap
+So Build first checks that the spec settles what users will see. A small gap
 is asked and written into the spec, because the reviewers check against it.
 More than a few, or one that changes the scope, sends the work back to
 [Specify](specify.md).
@@ -78,13 +79,13 @@ short. The agent that wrote it rarely cuts its own text, so before approval a
 fresh agent that has not seen the conversation marks what retells the spec or
 does the plan's work. A trivial change in one place gets a one-line approach and goes on
 without waiting. The design stays in Build's working folder, not in the
-ticket, which holds the product.
+spec, which holds the product.
 
 ## Approval is the handoff
 
 One message asks the engineer to approve the design and everything outside the
 code: answers to add to the spec, architecture decisions to write, and
-problems to turn into tickets. It ends with "Approve, and I'll run the rest
+problems to follow up. It ends with "Approve, and I'll run the rest
 without you", so the engineer knows when they can leave.
 
 ## Why the rest runs without a human
@@ -134,5 +135,5 @@ A mistake that should not recur is best caught by a check, such as a lint
 rule, a type, a test, or a CI job, because a check never forgets. Only a
 judgement call no check could make becomes a
 [coding standard](project-context.md#coding-standards). The human decides: a
-small fix to the context is made right away, real work becomes a ticket, and an
+small fix to the context is made right away, real work is planned, and an
 ignored suggestion is dropped. If the problem is real, it will come up again.

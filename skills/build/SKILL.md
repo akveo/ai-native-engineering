@@ -135,13 +135,18 @@ scope, or how the result is checked. Then one of three things happens:
 
 ## 2. Investigate
 
-Find what the design and the plan need, and nothing more:
+Gather the evidence the design rests on, so that you can decide instead of
+ask, and the facts the tasks will need once Build runs alone. Find what that
+takes, and nothing more:
 
 - the files, modules, and symbols the change touches;
 - what the change can build on: existing components, helpers, and similar
   features that already solve part of it, and how they are used today;
 - the tests near the change, and the commands that run the tests, lint, and
-  typecheck.
+  typecheck. A missing or broken test setup is a risk to raise in the design.
+
+Investigation does not end when the design starts: when a design question
+needs more evidence, investigate again before asking.
 
 When a decision rests on an external fact, such as how a library, an
 external service, or the database behaves, look it up instead of relying on
@@ -151,14 +156,14 @@ memory:
   when you have it;
 - use primary sources: the official documentation for the version the project
   uses, the dependency's source code, or its changelog;
-- record the fact in the design with its source. What you infer but could not
-  confirm is an assumption, marked as such, and a candidate for a spike.
+- cite the source with the fact. What you infer but could not confirm is an
+  assumption, marked as such, and a candidate for a spike.
 
-For larger work, subagents can explore separate areas in parallel. What you
-find goes into the design, where a decision rests on it, and into the plan: its
-constraints and each task's files and check carry what a fresh session needs.
-When you find a problem outside the request, keep it out of the change and
-mention it at approval, so the human can decide what to do with it.
+For larger work, subagents can explore separate areas in parallel. Write down
+what you find: nothing from this conversation reaches the tasks, only the
+design and the plan do. When you find a problem outside the request, keep it
+out of the change and mention it at approval, so the human can decide what
+to do with it.
 
 ## 3. Design
 

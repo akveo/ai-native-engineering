@@ -62,9 +62,9 @@ dependency. The engineer's time goes to judgement, not to facts.
 A design that answers product questions makes product decisions nobody agreed
 to, and how the code works today never settles how new behavior should look.
 So Build first checks that the spec settles what users will see. A small gap
-is asked and written into the spec, because the reviewers check against it.
-More than a few, or one that changes the scope, sends the work back to
-[Specify](specify.md).
+is asked and written into the spec as soon as the human answers, because the
+reviewers check against it; the design never carries it. More than a few, or
+one that changes the scope, sends the work back to [Specify](specify.md).
 
 ## The design names the risky choices
 
@@ -84,8 +84,7 @@ spec, which holds the product.
 ## Approval is the handoff
 
 One message asks the engineer to approve the design and everything outside the
-code: answers to add to the spec, architecture decisions to write, and
-problems to follow up. It ends with "Approve, and I'll run the rest
+code: architecture decisions to write, and problems to follow up. It ends with "Approve, and I'll run the rest
 without you", so the engineer knows when they can leave.
 
 ## Why the rest runs without a human

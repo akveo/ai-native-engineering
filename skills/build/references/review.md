@@ -21,6 +21,7 @@ Then mark every passage that does not belong:
 
 - the spec retold: a requirement in other words, or listed as the rules the
   code enforces, where citing its number would do;
+- product answers or proposed changes to the spec, which belong in the spec;
 - the plan's work: migration lists, column lists, the steps a function or
   module performs, how work is split;
 - code, schemas, interfaces, file inventories, and code names no decision

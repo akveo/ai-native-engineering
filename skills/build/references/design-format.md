@@ -69,6 +69,8 @@ person, not for the next agent.
   not what R3 says.
 - A list of the rules the code enforces is the spec again: name the
   requirements it keeps, and describe only how it keeps them.
+- No product answers and no changes to the spec. They are added to the spec
+  when the human answers, so the design only cites them.
 - A decision is a choice between alternatives. Behavior the spec already
   fixes is not a decision: cite the requirement. An existing building block
   with nothing to weigh gets one line, not a decision.

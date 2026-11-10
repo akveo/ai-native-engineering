@@ -45,6 +45,7 @@ Without an argument, ask what to build.
 When the spec belongs to larger work, such as an issue with a parent, read
 the larger work for context only, such as the overall outcome and what is
 already built. Build what the spec says.
+
 ## Working folder
 
 Build keeps its work in `.work/<slug>/` at the repository root, named after
@@ -56,8 +57,8 @@ work, and continue there. If `.work/` is not ignored by git, add it to
 
 The folder holds:
 
-- **`spec.md`:** the spec, as confirmed in step 1, only when it lives
-  nowhere else, such as text in the chat. Subagents and a later session read
+- **`spec.md`:** the spec, with the answers to product questions, only
+  when it lives nowhere else, such as text in the chat. Subagents and a later session read
   it here; a spec that lives elsewhere is read where it lives.
 - **`design.md`:** the design.
 - **`plan.md`:** the plan with its progress, so a fresh session can resume
@@ -70,34 +71,67 @@ first unfinished task. With only `design.md`, show it again and ask for
 approval. The folder is deleted once the change is merged; Build does not
 delete it.
 
+## Asking questions
+
+Build asks two kinds of questions: product questions about what the result
+does, from step 1, and technical questions about how it is built, from step
+3. Both are asked the same way.
+
+Ask in rounds: each round asks every open question that does not wait on the
+answer to another. Open the first round with a frame in one or two sentences:
+the outcome for product questions, the approach for technical ones. Number
+each question, give it a short title, and mark it as a product or a technical
+question when a round has both. Put your recommendation on a line of its own,
+and phrase the question so that it proposes the recommendation, so the human
+can take it with a plain "yes". Name the alternatives and what each would
+cost.
+
+> **Q1. Where the filter runs.** Should the project filter run in the browser
+> on the rows already loaded, like the person search? Filtering on the server
+> would need a new query and a cache change.
+>
+> → Yes, in the browser.
+
+A reply such as "all good except 2" accepts the rest. The answers go to
+different places:
+
+- **Product answers** belong in the spec. Once the human has answered, add
+  them where the spec lives and say in a line what was added. The human's
+  answer is the confirmation; the spec is never changed without one, and
+  never quietly. The design never holds product answers or lists changes to
+  the spec.
+- **Technical answers** become decisions in the design.
+
 ## 1. Check the input
 
-Build can start when the input says what the outcome is and how it will be
-checked: usually an agreed spec. An obvious change needs no more than its
-outcome and its check, such as "exporting an empty report no longer fails; a
-regression test covers it". When a short description leaves them implicit,
-such as "fix the date picker's default date", restate the outcome and its
-check in a line or two and confirm them before going on; the confirmed
-outcome is the spec from here on.
+Before investigating how to build, check that the input settles the product:
+what the outcome is, how it will be checked, and what the product's users, or
+the systems that rely on it, will notice. Build makes technical choices only;
+a product choice made in the design is one nobody agreed to.
 
-Look for open product questions before investigating how to build: list what
-the user will see, and check that the input settles each item. Typical gaps
-are which options are offered, defaults, empty and error states, what is kept
-or cleared, who can see what, and what exports and counts include.
+List what will be noticeable, and check that the input settles each item.
+Typical gaps are which options are offered, defaults, empty and error states,
+what is kept or cleared, who can see what, and what exports and counts
+include. How far to look depends on the input:
 
-Send the work back to specifying instead of asking when:
+- **An agreed spec:** its authors may have left details open on purpose.
+  Raise a gap only when building would force a guess about it.
+- **A short description**, such as "fix the date picker's default date":
+  state the outcome and its check yourself, in a line or two, together with
+  any gap that matters.
 
-- the outcome or how it will be checked is unclear, and one confirmation
-  would not settle it;
-- more than a few product questions are open;
-- an open question would change the scope or the expected result.
+An open question is small when its answer changes one detail of the result,
+such as a default or a message, and large when it changes the outcome, the
+scope, or how the result is checked. Then one of three things happens:
 
-Say what is missing, suggest running the specify skill on it, and stop.
-
-When only a few small product questions are open, ask them first, marked as
-product questions, in the format of step 3. The answers belong in the spec,
-not in the design; add them where the spec lives on the human's confirmation
-at approval. The spec is never changed quietly.
+- **Go on** when nothing is open.
+- **Ask first** when two or three small questions are open, or a short
+  description needs its outcome and check confirmed. Ask them in one round,
+  as [Asking questions](#asking-questions) describes, and add the answers to
+  the spec before going on.
+- **Send back** when a question is large, more small ones are open, or one
+  confirmation would not settle the outcome and its check. Say what is
+  missing, suggest running the specify skill on it, and stop.
 
 ## 2. Investigate
 
@@ -141,7 +175,9 @@ for approval. When in doubt, it is not trivial: ask for approval.
 Decide yourself what the evidence settles: an existing pattern, an
 architecture decision, a constraint in the code or the spec. These become
 decisions in the design, with a short reason. Evidence settles technical
-choices only; what users will see is a product question for step 1.
+choices only. What users will notice is a product question: ask a small one
+in the next round and add the answer to the spec; a large one sends the work
+back to specifying, as in step 1.
 
 Ask the human only about:
 
@@ -150,23 +186,10 @@ Ask the human only about:
 - going against an architecture decision or an established pattern;
 - a new dependency or a new pattern in the codebase.
 
-Open the first round with the approach in one or two sentences, so the
-questions have a frame. Then ask in rounds: each round asks every open
-question that does not wait on the answer to another. Number each question,
-give it a short title, and put your recommendation on a line of its own.
-Phrase it as a question that proposes the recommendation, so the human can
-take it with a plain "yes". Name the alternatives and what each would cost.
-
-> **Q1. Where the filter runs.** Should the project filter run in the browser
-> on the rows already loaded, like the person search? Filtering on the server
-> would need a new query and a cache change.
->
-> → Yes, in the browser.
-
-A reply such as "all good except 2" accepts the rest. Each answer becomes a
-decision in the design. The rounds end when no open question would change the
-approach. When a question cannot be settled by talking, such as how slow a
-query really is, say so and propose a short spike instead of guessing.
+Ask as [Asking questions](#asking-questions) describes. The rounds end when
+no open question would change the approach. When a question cannot be
+settled by talking, such as how slow a query really is, say so and propose a
+short spike instead of guessing.
 
 Build does not split work; how to split it is a product decision. When the
 change looks too big for one reviewable pull request, say so at approval: the
@@ -204,7 +227,6 @@ a choice for the human, ask it as a new round first.
 Link to `design.md` and ask for explicit approval in one message that also
 lists what will change outside the code, so one confirmation covers it:
 
-- product answers from step 1, to add to the spec;
 - ADRs to write, for a decision that was chosen over a real alternative,
   would be costly to change later, and that a future reader could not work
   out from the code alone. They ship as files in this pull request;
@@ -212,8 +234,7 @@ lists what will change outside the code, so one confirmation covers it:
 - a warning when the change looks too big for one pull request.
 
 End the message with: "Approve, and I'll run the rest without you." After
-corrections, update the design and ask again. After approval, make the
-confirmed changes to the spec, and from here on ask nothing.
+corrections, update the design and ask again. After approval, ask nothing.
 
 ## 5. Write the plan
 

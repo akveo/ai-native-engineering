@@ -68,8 +68,7 @@ Write every file so that it reads without the conversation. The plan is
 written only after approval, so an existing `plan.md` means the design is
 approved: check the working tree against its progress and continue from the
 first unfinished task. With only `design.md`, show it again and ask for
-approval. The folder is deleted once the change is merged; Build does not
-delete it.
+approval.
 
 ## Asking questions
 
@@ -274,8 +273,8 @@ produced, and where to find the spec and the design. It does not receive the
 whole plan or this conversation.
 
 The numbers of requirements, decisions, and tasks (R9, D3, T2) exist only in
-the spec and Build's working folder, and the folder is deleted once the change
-is merged. Code, comments, tests, and other files the change ships never cite
+the spec and Build's working folder, and neither ships with the change.
+Code, comments, tests, and other files the change ships never cite
 them: a comment says the reason in its own words. Tell each subagent so.
 ADRs and other permanent references may be cited where they help.
 

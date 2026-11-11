@@ -58,17 +58,18 @@ work, and continue there. If `.work/` is not ignored by git, add it to
 The folder holds:
 
 - **`spec.md`:** the spec, with the answers to product questions, only
-  when it lives nowhere else, such as text in the chat. Subagents and a later session read
-  it here; a spec that lives elsewhere is read where it lives.
+  when it lives nowhere else, such as text in the chat. Subagents and a
+  later session read it here; a spec that lives elsewhere is read where it
+  lives.
 - **`design.md`:** the design.
-- **`plan.md`:** the plan with its progress, so a fresh session can resume
-  where Build stopped.
+- **`plan.md`:** the plan, with each task's result and a log, so a fresh
+  session can resume where Build stopped.
 
 Write every file so that it reads without the conversation. The plan is
 written only after approval, so an existing `plan.md` means the design is
-approved: check the working tree against its progress and continue from the
-first unfinished task. With only `design.md`, show it again and ask for
-approval.
+approved: check the working tree against the tasks marked done and continue
+from the first task that is not. With only `design.md`, show it again and
+ask for approval.
 
 ## Asking questions
 
@@ -210,7 +211,7 @@ and changes nothing the change ships; its result settles the choice. A spike
 that needs more goes back to the engineer.
 
 When you find a problem outside the request, keep it out of the change. It
-goes into the plan's progress as deferred, so the human sees it at the end
+goes into the plan's log as deferred, so the human sees it at the end
 and decides what to do with it. A problem the change depends on, such as a
 bug in the code it builds on, is not outside the request: it is a risk in
 the design.
@@ -268,33 +269,30 @@ line and go on to the plan.
 
 ## 4. Write the plan
 
-Read [references/plan-format.md](references/plan-format.md) for the format.
-First find what the tasks need to run on their own, such as the tests near
-the change and the commands that run the tests, lint, and typecheck; they go
-into the plan's constraints. The plan says what will change in the codebase
-and how, as a list of tasks:
+Read [references/plan-format.md](references/plan-format.md) and write
+`plan.md`. First find what the tasks need to run on their own, such as the
+tests near the change and the commands that run the tests, lint, and
+typecheck. They go into the plan's constraints, together with any coding
+standard that clearly concerns a task, so the task gets it right the first
+time.
 
-- split the work into the smallest pieces that can each be checked on their
-  own;
-- every requirement, glossary change, and design decision, and every ADR the
-  design adds, has a task;
-- a coding standard that clearly concerns a task goes into the plan's
-  constraints, so the task gets it right the first time;
-- no implementation code: say what changes and where, and leave the code to
-  the task. When a task's description grows toward the size of its code, cut
-  it back;
-- no choices the reviewer would have wanted to agree on. If the plan needs
-  one, stop: the design needs another look with the human;
-- each problem found outside the request while designing goes into the
-  progress as deferred, with what it is and where.
+Every requirement, every design decision, every ADR the design adds, and
+every term the spec settles for the glossary has a task. Each problem found
+outside the request while designing goes into the log as deferred, with
+what it is and where.
+
+The plan makes no choice the engineer would have wanted to agree on. If it
+needs one, stop: add the choice to the design and ask for approval again, as
+in step 3.
 
 ## 5. Check the plan
 
 A fresh, read-only subagent checks the plan before execution. Give it the
 plan, the spec, the design, and the checklist in
 [references/review.md](references/review.md#plan-check). Fix the findings
-once. If a finding needs a decision, stop: the design needs another look with
-the human.
+once. If a finding needs a choice the engineer would want to agree on, stop
+as in step 4. A plan with a single task, or one written after approval was
+skipped, has little to check: skip the check.
 
 ## 6. Execute the tasks
 
@@ -309,11 +307,8 @@ Code, comments, tests, and other files the change ships never cite
 them: a comment says the reason in its own words. Tell each subagent so.
 ADRs and other permanent references may be cited where they help.
 
-Run tasks in series by default. Run them in parallel only when they cannot
-get in each other's way: they touch different files and interfaces, neither
-changes the database schema or the dependencies, neither regenerates code
-the other uses, and they do not need the same running service, such as a
-development server or a database. No more than three at a time. When in
+Run tasks in series by default. Run them in parallel only when neither
+depends on the other in the plan, no more than three at a time. When in
 doubt, run in series.
 
 After each task:
@@ -321,8 +316,8 @@ After each task:
 1. For a behavior change, the test is written first and seen to fail.
 2. Run the task's check yourself once the subagent has reported back; do not
    rely on its report alone.
-3. Record the task as done in the plan's progress, with anything the next
-   session would need to know. Record nothing before the result is in.
+3. Mark the task done in the plan, with anything a later task or session
+   would need to know. Record nothing before the result is in.
 
 If a failure is still there after two attempts to fix it, a third patch
 will not help. Change the approach: give the subagent more context, use a
@@ -332,14 +327,14 @@ stronger model, or split the task. If it still fails, stop.
 
 | Discovery | Action |
 | --- | --- |
-| A small plan error: a wrong path, a renamed symbol, a missing step, a bug caused by the change itself | Handle it and record it in the progress |
-| A choice the design left to Build, a pre-existing problem nearby, a check that cannot run | Decide or defer, and record it in the progress |
-| A need the design did not cover: a new dependency or pattern, a schema, contract, or security change; a design decision that does not work | Stop: the design needs another look with the human |
+| A small plan error: a wrong path, a renamed symbol, a missing step, a bug caused by the change itself | Handle it and update the task in the plan |
+| A choice the design left to Build, a pre-existing problem nearby, a check that cannot run | Decide or defer, and record it in the plan's log |
+| A need the design did not cover: a new dependency or pattern, a schema, contract, or security change; a design decision that does not work | Stop: add the choice to the design and ask for approval again, as in step 3 |
 | A requirement that is unclear, conflicting, or missing, or work beyond the spec | Stop: the work returns to specifying |
 | A destructive or irreversible action, pushing or publishing, credentials, a failed package install, no progress after the fix limit | Stop for a human |
 
 When Build stops, it leaves its changes in place, records where it stopped in
-the plan's progress, and tells the human what it found, why it stopped, and
+the plan's log, and tells the human what it found, why it stopped, and
 what comes next. Running the skill again resumes from the folder.
 
 ## 8. Review the result
@@ -370,18 +365,18 @@ is uncertain instead of dropping it.
 
 ### Fix and repeat
 
-Fix the confirmed findings as new tasks in fresh subagents, and run the
-affected checks again. The next round reviews the result. Stop when a round
-produces no confirmed findings worth fixing; record minor and pre-existing
-findings in the progress. A serious finding that returns after a
-fix points to a problem upstream: stop. After the third round, stop whatever
-remains. Findings about the design or the requirements follow the table in
-step 7.
+Record each round in the plan's log. Fix the confirmed findings as new
+tasks in fresh subagents, and run the affected checks again. The next round
+reviews the result. Stop when a round produces no confirmed findings worth
+fixing; record minor and pre-existing findings in the log. A serious finding
+that returns after a fix points to a problem upstream: stop. After the
+third round, stop whatever remains. Findings about the design or the
+requirements follow the table in step 7.
 
 ## 9. Finish
 
 1. Make sure the full test suite, lint, and typecheck pass on the final code.
-2. Mark the plan as finished in its progress.
+2. Record in the plan's log that it is finished.
 
 Do not change the spec after approval. Do not commit or
 open a pull request. End with the outcome in a line or two, a link to

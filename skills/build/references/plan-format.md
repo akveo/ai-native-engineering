@@ -29,10 +29,11 @@ Spec: where it lives, as a link or a path
 - Files: the files this task creates or changes
 - Change: what changes, in one to three lines
 - Check: the command that proves it, and the expected result
+- Done: anything a later task or session needs to know
 
-## Progress
+## Log
 
-- T1: done. Anything the next task or session needs to know.
+- Decided: a choice made while building, and a short reason.
 ```
 
 ## Writing tasks
@@ -48,14 +49,20 @@ Spec: where it lives, as a link or a path
   regenerates, or when both need the same running service, such as a
   development server or a database.
 - Put preparatory refactoring first, then the behavior, then the clean-up.
-- No implementation code. Describe the change; the task's subagent writes it.
+- No implementation code. Describe the change; the task's subagent writes
+  it. When a task's description grows toward the size of its code, cut it
+  back.
 
-## Progress
+## Tracking the work
 
-Update the progress after every task, and after every review round:
+Each task records its own result. Add the `Done:` line only once the task's
+check has passed; a task without it is not done. When a small plan error was
+handled, change the task to what was actually done and say what changed in
+its `Done:` line.
 
-- `T1: done.` with anything a later task or a fresh session would need.
-- `T2: changed:` when a small plan error was handled, and how.
+The log holds what belongs to no task. Add to its end, and never rewrite an
+entry:
+
 - `Decided:` or `Deferred:` a choice the design left to Build, a review
   finding left unresolved, or a problem noticed but not fixed, with a short
   reason.

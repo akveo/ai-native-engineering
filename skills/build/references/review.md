@@ -49,7 +49,8 @@ Inputs: the plan, the spec, the design.
 
 Check that:
 
-- every requirement, design decision, ADR, and glossary change has a task;
+- every requirement, design decision, ADR, and term the spec settles for the
+  glossary has a task;
 - no task makes a choice the approved design should have made;
 - every task has a check that can actually run;
 - the files and the dependencies between tasks are consistent;
@@ -64,8 +65,8 @@ Inputs: the spec, the design, the changes in the working tree.
 
 Does the change do what the spec and the design say, and nothing else? Check
 that every requirement has code and, where it applies, a test behind it; that
-every design decision is followed; that the agreed glossary changes are
-made; and that nothing was added that neither asked for.
+every design decision is followed; that every term the spec settles is in
+the glossary; and that nothing was added that neither asked for.
 
 ## Code review
 

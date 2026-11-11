@@ -108,6 +108,24 @@ different places:
   the spec.
 - **Answers to a fork or a spike** become decisions in the design.
 
+## When something comes up
+
+After approval, Build meets what the plan did not foresee. Sort each
+discovery by who owns the decision:
+
+| Discovery | Action |
+| --- | --- |
+| A small plan error: a wrong path, a renamed symbol, a missing step | Handle it and update the task in the plan |
+| A choice the design left to Build, a pre-existing problem nearby | Decide or defer, and record it in the plan's log |
+| A check that cannot run | When another check proves the task, change the task to use it; when the environment is missing, such as a database, stop for a human |
+| A need the design did not cover: a new dependency or pattern, a schema, contract, or security change; a design decision that does not work | Stop: add the choice to the design and ask for approval again, as in step 3. Finished tasks stay; once approved, update the plan and continue from where Build stopped |
+| A requirement that is unclear, conflicting, or missing, or work beyond the spec | Stop: the work returns to specifying |
+| A destructive or irreversible action, pushing or publishing, credentials, a failed package install | Stop for a human |
+
+When Build stops, it leaves its changes in place, records where it stopped in
+the plan's log, and tells the human what it found, why it stopped, and
+what comes next. Running the skill again resumes from the folder.
+
 ## 1. Check the input
 
 Before designing how to build, check that the input settles the product:
@@ -315,7 +333,7 @@ Tell each subagent:
   references may be cited where they help;
 - do not commit;
 - make no choice the task does not cover. Report it instead, and you handle
-  it as step 7 describes.
+  it as [When something comes up](#when-something-comes-up) describes.
 
 Run tasks in series by default. Run them in parallel only when neither
 depends on the other in the plan, no more than three at a time. When in
@@ -326,7 +344,8 @@ After each task:
 
 1. Run the task's check yourself; do not rely on the subagent's report alone.
 2. Compare the files it changed with the task's `Files:`. A difference is a
-   small plan error to record in the task, or a discovery for step 7.
+   small plan error to record in the task, or a discovery to handle as
+   [When something comes up](#when-something-comes-up) describes.
 3. Mark the task done in the plan, with anything a later task or session
    would need to know. Record nothing before the result is in.
 
@@ -335,21 +354,7 @@ will not help. Change the approach: give the subagent more context, use a
 stronger model, or split the task. If it still fails, stop, and say in the
 log what was tried, so a later session does not try it again.
 
-## 7. Handle what you discover
-
-| Discovery | Action |
-| --- | --- |
-| A small plan error: a wrong path, a renamed symbol, a missing step, a bug caused by the change itself | Handle it and update the task in the plan |
-| A choice the design left to Build, a pre-existing problem nearby, a check that cannot run | Decide or defer, and record it in the plan's log |
-| A need the design did not cover: a new dependency or pattern, a schema, contract, or security change; a design decision that does not work | Stop: add the choice to the design and ask for approval again, as in step 3 |
-| A requirement that is unclear, conflicting, or missing, or work beyond the spec | Stop: the work returns to specifying |
-| A destructive or irreversible action, pushing or publishing, credentials, a failed package install, no progress after the fix limit | Stop for a human |
-
-When Build stops, it leaves its changes in place, records where it stopped in
-the plan's log, and tells the human what it found, why it stopped, and
-what comes next. Running the skill again resumes from the folder.
-
-## 8. Review the result
+## 7. Review the result
 
 When all tasks are done, run the full test suite, lint, and typecheck, and
 remove code left over from abandoned attempts. Then review the whole change.
@@ -383,9 +388,10 @@ reviews the result. Stop when a round produces no confirmed findings worth
 fixing; record minor and pre-existing findings in the log. A serious finding
 that returns after a fix points to a problem upstream: stop. After the
 third round, stop whatever remains. Findings about the design or the
-requirements follow the table in step 7.
+requirements are handled as [When something comes up](#when-something-comes-up)
+describes.
 
-## 9. Finish
+## 8. Finish
 
 1. Make sure the full test suite, lint, and typecheck pass on the final code.
 2. Record in the plan's log that it is finished.

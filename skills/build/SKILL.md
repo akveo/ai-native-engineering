@@ -18,9 +18,10 @@ it. Build has two halves:
   supports yourself, and bring them the ones where reasonable engineers could
   differ.
 - **Alone, after approval:** plan, run the tasks, review the result. Do not
-  ask questions in this half: make the choices the design left to Build, and
-  stop when a choice belongs to someone else. A stop with a clear reason is a
-  good result; a guess that reaches review is not.
+  ask questions in this half, and do not change the spec: make the choices
+  the design left to Build, and stop when a choice belongs to someone else. A
+  stop with a clear reason is a good result; a guess that reaches review is
+  not.
 
 Build works from the spec and the design alone. If this conversation already
 holds other work, suggest starting a fresh session before going on: earlier
@@ -124,7 +125,9 @@ discovery by who owns the decision:
 
 When Build stops, it leaves its changes in place, records where it stopped in
 the plan's log, and tells the human what it found, why it stopped, and
-what comes next. Running the skill again resumes from the folder.
+what comes next. It also lists the problems outside the request deferred
+so far, and any [improvement suggestions](#improvement-suggestions). Running
+the skill again resumes from the folder.
 
 ## 1. Check the input
 
@@ -391,23 +394,29 @@ design or the requirements are handled as
 
 ## 8. Finish
 
-1. Make sure the full test suite, lint, and typecheck pass on the final code.
-2. Record in the plan's log that it is finished.
+When the review fixed anything, run the full test suite, lint, and
+typecheck again on the final code. When one fails, fix it as a new task; the
+fix limit in step 6 applies. Then record in the plan's log that Build is
+finished.
 
-Do not change the spec after approval. Do not commit or
-open a pull request. End with the outcome in a line or two, a link to
-`design.md`, and only what exists of: choices Build made that are not obvious
-from the code, review findings left unresolved, and problems noticed but not
-fixed.
+End with the outcome in a line or two and a link to `design.md`. Then say
+how the change was verified and what was not, such as "not tried in the
+running app" or "integration tests skipped: no database". Then list only
+what exists in the plan's log, each group on its own:
 
-If the work showed friction in the setup, add improvement suggestions after
-the outcome. Friction is a moment in this session such as:
+- findings left unresolved, to look at before committing;
+- problems outside the request, for the human to follow up, each with what
+  it is and where.
+
+## Improvement suggestions
+
+When Build finishes or stops, add improvement suggestions if the work showed
+friction in the setup. Friction is a moment in this session such as:
 
 - a command, test environment, or piece of context you could not find, or
   found only after several attempts;
 - a line in the agent instructions that was wrong or out of date;
 - a mistake a check could have caught, such as one the review found;
-- a review finding you can see in earlier pull requests too;
 - a correction the human gave that they say they have given before.
 
 For each, say what happened, what to change, and where: the code, a check, the

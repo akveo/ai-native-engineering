@@ -14,9 +14,9 @@ The spec holds the product; Build settles the technical side and delivers
 it. Build has two halves:
 
 - **With the human:** check the input, design the approach, and get it
-  approved. The reviewer is an engineer: make the choices the evidence
-  supports yourself, and bring them the ones where reasonable engineers could
-  differ.
+  approved. The approver is an engineer: make the choices the evidence
+  supports yourself, and set out in the design the ones where reasonable
+  engineers could differ.
 - **Alone, after approval:** plan, run the tasks, review the result. Do not
   ask questions in this half, and do not change the spec: make the choices
   the design left to Build, and stop when a choice belongs to someone else. A
@@ -117,7 +117,8 @@ discovery by who owns the decision:
 | Discovery | Action |
 | --- | --- |
 | A small plan error: a wrong path, a renamed symbol, a missing step | Handle it and update the task in the plan |
-| A choice the design left to Build, a pre-existing problem nearby | Decide or defer, and record it in the plan's log |
+| A choice the design left to Build | Decide it, and record it in the plan's log |
+| A problem outside the request, such as a pre-existing bug nearby | Keep it out of the change, and defer it in the plan's log |
 | A check that cannot run | When another check proves the task, change the task to use it; when the environment is missing, such as a database, stop for a human |
 | A need the design did not cover: a new dependency or pattern, a schema, contract, or security change; a design decision that does not work | Stop: add the choice to the design and ask for approval again, as in step 3. Finished tasks stay; once approved, update the plan and continue from where Build stopped |
 | A requirement that is unclear, conflicting, or missing, or work beyond the spec | Stop: the work returns to specifying |
@@ -163,9 +164,9 @@ scope, or how the result is checked. Then one of three things happens:
 ## 2. Design
 
 Design settles how to build: find the evidence, make the technical choices it
-settles, and bring the human the ones it does not. Write down what you find:
-nothing from this conversation reaches the tasks, only the design and the
-plan do.
+settles, and set out for the engineer the ones it does not. Write down what
+you find: nothing from this conversation reaches the tasks, only the design
+and the plan do.
 
 ### Get oriented
 
@@ -193,7 +194,7 @@ First set aside the choices that need no evidence:
 - **Product:** what users will notice. Ask a small one as
   [Asking questions](#asking-questions) describes and add the answer to the
   spec; a large one sends the work back to specifying, as in step 1.
-- **Left to the plan:** what the reviewer would not want to agree on, such as
+- **Left to the plan:** what the engineer would not want to agree on, such as
   naming, internal structure, or the order of tasks.
 
 Settle each technical choice that remains with evidence before deciding or
@@ -240,9 +241,7 @@ the design.
 ### Write the design
 
 Read [references/design-format.md](references/design-format.md) and write
-`design.md` once every choice is settled or set out for the engineer. Each of
-the format's areas that the change touches gets its line, however small the
-change.
+`design.md` once every choice is settled or set out for the engineer.
 
 ### Check the design
 

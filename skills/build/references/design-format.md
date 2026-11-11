@@ -54,8 +54,8 @@ A narrow change may need only the summary, such as "Follows the pattern in
   an ADR: chosen over a real alternative, costly to change later, and not
   something a future reader could work out from the code. Build writes each
   marked decision as an ADR file in this change, so approving the design
-  approves the ADR. Number decisions
-  (D1, D2) so that the plan and the reviews can refer to them.
+  approves the ADR. Number decisions (D1, D2) so that the plan and the
+  reviews can refer to them.
 - **Areas:** one line for each area below that the change touches, however
   small the change, because risk here does not follow size. An area the
   change does not touch is left out.

@@ -1,9 +1,8 @@
 # Build
 
-Build turns an agreed spec into a reviewed change, ready for one pull request:
-the whole spec, or one [slice](specify.md#slicing-happens-here). The
-[build skill](../skills/build/SKILL.md) runs it. This guide explains why it
-exists and why it works the way it does.
+Build turns an agreed spec into a reviewed change, ready for one pull request.
+The [build skill](../skills/build/SKILL.md) runs it. This guide explains why
+it exists and why it works the way it does.
 
 ## How to use it
 
@@ -15,11 +14,11 @@ file, or a link, or paste the spec into the chat:
 /build 142
 ```
 
-The spec is usually one agreed in [Specify](specify.md), or one slice of it. A
-small, obvious change can skip Specify and only state the outcome and its
-check, such as "Exporting an empty report no longer fails; a regression test
-covers it". Or just describe the change. The skill confirms the outcome and its
-check before going on:
+The spec is usually one agreed in [Specify](specify.md). A small, obvious
+change can skip Specify and only state the outcome and its check, such as
+"Exporting an empty report no longer fails; a regression test covers it". Or
+just describe the change. The skill confirms the outcome and its check before
+going on:
 
 ```
 /build Fix the date picker's default date
@@ -91,10 +90,11 @@ it, and that engineer is its only reader. So it holds only what helps them
 decide: the approach, the decisions the engineer would want to agree on, the
 risky areas, and the assumptions and risks. Facts, file lists, and commands
 the later agents need go into the plan instead. The agent that wrote it
-rarely cuts its own text, so before approval a fresh agent that has not seen
-the conversation marks what retells the spec or does the plan's work. The
-design stays in Build's working folder, not in the spec, which holds the
-product.
+rarely cuts its own text and does not see the choices it made without
+noticing. So before approval a fresh agent that has not seen the
+conversation marks what retells the spec or does the plan's work, and finds
+the choices the design leaves silent. The design stays in Build's working
+folder, not in the spec, which holds the product.
 
 ## Approval is the handoff
 
@@ -103,9 +103,9 @@ architecture decisions it marks to write. It warns when the change looks too
 big for one pull request, because splitting it is a product decision. Problems
 found outside the request are not part of it: they do not change the
 approach, so Build records them in its plan and lists them when it finishes,
-for the human to follow up. The message ends by
-making clear that this is the last point to change the approach, so the
-engineer knows when they can leave.
+for the human to follow up. The message ends by making clear that this is
+the last point to change the approach, so the engineer knows when they can
+leave.
 
 The engineer can change any decision in the reply. Picking an alternative the
 design already lists is approval with that choice. A change that other
@@ -144,6 +144,16 @@ fixed. Later rounds review only the fixes, not the whole change again,
 because fresh reviewers always find something new to say and the rounds
 would never settle. Rounds are limited to three, and a serious finding that
 keeps coming back points to a problem in the spec or design, so Build stops.
+
+## What Build leaves
+
+Build leaves the change uncommitted in the working tree, for the human to
+commit and open the pull request. Its last message says what was done, how
+it was verified and what was not, such as "not tried in the running app",
+the review findings it could not resolve, and the problems outside the
+request it kept out of the change. Everything else stays in Build's working
+folder: the design, and the plan with each task's result and a log of what
+happened.
 
 ## Improvement suggestions
 

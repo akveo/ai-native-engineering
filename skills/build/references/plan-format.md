@@ -63,11 +63,12 @@ its `Done:` line.
 The log holds what belongs to no task. Add to its end, and never rewrite an
 entry:
 
-- `Decided:` or `Deferred:` a choice the design left to Build, a review
-  finding left unresolved, or a problem noticed but not fixed, with a short
-  reason.
+- `Decided:` a choice the design left to Build, with a short reason.
+- `Deferred:` a problem outside the request, with what it is and where.
+- `Unresolved:` a review finding that could be neither confirmed nor
+  dropped, with what was tried.
 - `Review round 1: 3 confirmed, fixed; 1 dropped.` Fixes for confirmed
   findings are added as new tasks, numbered on from the last one (T4, T5),
-  so they do not clash with requirement numbers.
+  so earlier task numbers never change.
 - `Stopped at T4:` the reason, when Build stops.
-- `Finished.` once the final checks pass.
+- `Finished.` when Build finishes.

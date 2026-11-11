@@ -20,13 +20,13 @@ The design is read by an engineer who has to approve it. Check that:
 - every choice the engineer must settle, such as a real trade-off, going
   against an architecture decision or pattern, or something new, is written
   with its alternatives and what each costs;
-- no choice the reviewer would want to agree on is left to the plan;
+- no choice the engineer would want to agree on is left to the plan;
 - the design makes no product choice the spec does not contain.
 
 Then look for what the design leaves silent: the choices that building it
 will force, such as where the code goes, what it reuses, how data is stored
-or moved, and what other systems see. Report each one a reviewer would want
-to agree on and the design does not settle.
+or moved, and what other systems see. Report each one the engineer would
+want to agree on and the design does not settle.
 
 Then mark every passage that does not belong:
 

@@ -132,9 +132,9 @@ Decisions are kept as **architecture decision records (ADRs)**, short files
 in `docs/adr/`. Few decisions need one: only those that are hard to reverse,
 surprising without context, and the result of a real trade-off, such as the
 shape of the system, technology with real lock-in, deliberate exclusions, or
-constraints the code does not show. Build drafts an ADR while agreeing the
-approach with the engineer, and it ships in the pull request that brings the
-decision.
+constraints the code does not show. Build marks the decisions that need an
+ADR in the design the engineer approves, and writes them in the pull request
+that brings the decision.
 
 ### Setup
 

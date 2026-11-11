@@ -359,37 +359,35 @@ log what was tried, so a later session does not try it again.
 When all tasks are done, run the full test suite, lint, and typecheck, and
 remove code left over from abandoned attempts. Then review the whole change.
 
-Run two reviews in parallel, each in a fresh, read-only subagent:
-
-- **Spec review:** does the change do what the spec and the design say, and
-  nothing else?
-- **Code review:** is the changed code correct, secure, maintainable, and
-  consistent with the project and its coding standards?
-
-When the change touches security, data, or an external contract, add a
-review focused on that area; building blocks are left to the code review. The
-reviewers see the spec, the design, the project's coding standards, and the
-changes in the working tree, not the plan, so they judge the result rather
-than the intention. Their briefs and the finding format are in
-[references/review.md](references/review.md).
+Run the spec review and the code review in parallel, each in a fresh,
+read-only subagent. When the change touches security, data, or an external
+contract, add an area review for each; building blocks are left to the code
+review. Give each reviewer the inputs its brief in
+[references/review.md](references/review.md) names, and not the plan, so it
+judges the result rather than the intention.
 
 ### Validate before fixing
 
 A reviewer asked to find problems usually reports some, even when the work is
 sound. Before fixing anything, a separate subagent checks each finding against
-the code. Drop a finding it cannot confirm. Investigate a serious finding that
-is uncertain instead of dropping it.
+the code. Drop a finding it cannot confirm. For a serious finding it marks
+uncertain, try to reproduce the failure yourself, ideally with a failing
+test: when it happens, the finding is confirmed; when it does not, record
+the finding in the plan's log as unresolved.
 
 ### Fix and repeat
 
-Record each round in the plan's log. Fix the confirmed findings as new
-tasks in fresh subagents, and run the affected checks again. The next round
-reviews the result. Stop when a round produces no confirmed findings worth
-fixing; record minor and pre-existing findings in the log. A serious finding
-that returns after a fix points to a problem upstream: stop. After the
-third round, stop whatever remains. Findings about the design or the
-requirements are handled as [When something comes up](#when-something-comes-up)
-describes.
+Record each round in the plan's log. Fix every confirmed finding, minor ones
+too, as new tasks in fresh subagents, and run the affected checks again. A
+note about code the change did not touch is not a finding: when it matters,
+defer it in the log like any problem outside the request.
+
+The next round reviews only what the fixes changed, with the findings they
+address. Stop when a round confirms no findings. A serious finding that
+returns after a fix points to a problem upstream: stop. After the third
+round, stop and record whatever remains in the log. Findings about the
+design or the requirements are handled as
+[When something comes up](#when-something-comes-up) describes.
 
 ## 8. Finish
 

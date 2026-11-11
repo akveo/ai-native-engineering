@@ -4,6 +4,10 @@ Each check runs in a fresh, read-only subagent. Give it the brief below and
 the inputs it names, and nothing else: not the conversation, and, except for
 the plan check, not the plan.
 
+The reviews of the change get the list of changed and new files from
+`git status`, because a diff does not show new files. Read each new file in
+full.
+
 ## Design check
 
 Inputs: the design, the spec, the design format, and read access to the code.
@@ -61,7 +65,7 @@ nothing when the plan is sound.
 
 ## Spec review
 
-Inputs: the spec, the design, the changes in the working tree.
+Inputs: the spec, the design, the changed and new files.
 
 Does the change do what the spec and the design say, and nothing else? Check
 that every requirement has code and, where it applies, a test behind it; that
@@ -71,7 +75,7 @@ the glossary; and that nothing was added that neither asked for.
 ## Code review
 
 Inputs: the spec, the design, the project's coding standards if any, the
-changes in the working tree.
+changed and new files.
 
 Is the changed code correct, secure, maintainable, and consistent with the
 project? Look for bugs, unhandled failure and boundary cases, missing or weak
@@ -89,12 +93,19 @@ it differently.
 
 ## Area review
 
-Inputs: as for the code review, plus the design's section on the area.
+Inputs: as for the code review, plus the area's line in the design.
 
 Used when the change touches security and access control, data, or an
-external contract. Check only that area, in
-depth: who can do what, what happens to existing data and how to roll back,
-or what other systems relying on the contract will see.
+external contract. Check only that area, in depth: who can do what, what
+happens to existing data and how to roll back, or what other systems relying
+on the contract will see.
+
+## Later rounds
+
+From the second round on, a reviewer gets the findings the fixes address and
+the files the fixes changed, instead of the whole change. Check that each
+finding is resolved and that the fixes broke nothing. Report a new problem
+only when a fix caused it.
 
 ## Finding format
 
@@ -114,8 +125,7 @@ result; do not report something to appear thorough.
 
 ## Validation
 
-Inputs: the findings, the changes in the working tree, read access to the
-code.
+Inputs: the findings, the changed and new files, read access to the code.
 
 For each finding, check it against the code and answer: confirmed, not
 confirmed, or uncertain, with the evidence. Try to show that the failure in

@@ -140,8 +140,10 @@ rather than the intention.
 
 A reviewer asked to find problems usually finds some, even in sound work. So
 another subagent confirms each finding against the code before anything is
-fixed. Review rounds are limited to three, and a serious finding that keeps
-coming back points to a problem in the spec or design, so Build stops.
+fixed. Later rounds review only the fixes, not the whole change again,
+because fresh reviewers always find something new to say and the rounds
+would never settle. Rounds are limited to three, and a serious finding that
+keeps coming back points to a problem in the spec or design, so Build stops.
 
 ## Improvement suggestions
 

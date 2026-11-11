@@ -296,32 +296,44 @@ skipped, has little to check: skip the check.
 
 ## 6. Execute the tasks
 
-Run each task in a fresh subagent that receives only what it needs: the task,
-the plan's constraints, the findings that concern it, what earlier tasks
-produced, and where to find the spec and the design. It does not receive the
-whole plan or this conversation.
+Run each task in a fresh subagent. It does not receive the whole plan or this
+conversation, only what the task needs:
 
-The numbers of requirements, decisions, and tasks (R9, D3, T2) exist only in
-the spec and Build's working folder, and neither ships with the change.
-Code, comments, tests, and other files the change ships never cite
-them: a comment says the reason in its own words. Tell each subagent so.
-ADRs and other permanent references may be cited where they help.
+- the task and the plan's constraints;
+- the `Done:` lines of the tasks it depends on;
+- where to find the spec and the design;
+- for a fix task, the finding it fixes.
+
+Tell each subagent:
+
+- for a behavior change, write the test first, run it, and report the
+  failing output;
+- the numbers of requirements, decisions, and tasks (R9, D3, T2) exist only
+  in the spec and Build's working folder, and neither ships with the change.
+  Code, comments, tests, and other files the change ships never cite them: a
+  comment says the reason in its own words. ADRs and other permanent
+  references may be cited where they help;
+- do not commit;
+- make no choice the task does not cover. Report it instead, and you handle
+  it as step 7 describes.
 
 Run tasks in series by default. Run them in parallel only when neither
 depends on the other in the plan, no more than three at a time. When in
-doubt, run in series.
+doubt, run in series. Parallel tasks share the working tree, so run their
+checks only once every task in the group has reported back.
 
 After each task:
 
-1. For a behavior change, the test is written first and seen to fail.
-2. Run the task's check yourself once the subagent has reported back; do not
-   rely on its report alone.
+1. Run the task's check yourself; do not rely on the subagent's report alone.
+2. Compare the files it changed with the task's `Files:`. A difference is a
+   small plan error to record in the task, or a discovery for step 7.
 3. Mark the task done in the plan, with anything a later task or session
    would need to know. Record nothing before the result is in.
 
 If a failure is still there after two attempts to fix it, a third patch
 will not help. Change the approach: give the subagent more context, use a
-stronger model, or split the task. If it still fails, stop.
+stronger model, or split the task. If it still fails, stop, and say in the
+log what was tried, so a later session does not try it again.
 
 ## 7. Handle what you discover
 

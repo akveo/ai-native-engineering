@@ -104,8 +104,8 @@ _Avoid_: Purchase, transaction
   names, tests, and proposals.
 - When a term conflicts with the glossary or is vague, say so and propose a
   precise one.
-- Record a settled term in the spec or the design; the glossary itself
-  changes in the pull request that brings the behavior.
+- Record a settled term in the spec; the glossary itself changes in the
+  pull request that brings the behavior.
 - Remove a term when its concept disappears.
 - An agent may propose and edit terms; a human reviews the changes.
 ````

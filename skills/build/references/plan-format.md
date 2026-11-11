@@ -13,8 +13,8 @@ Spec: where it lives, as a link or a path
 
 - A constraint from the spec or design that every task must respect.
 - A coding standard that concerns the tasks, quoted or linked.
-- A fact from the investigation that the tasks need, such as the commands that
-  run the tests, lint, and typecheck.
+- A fact from the design or the codebase that the tasks need, such as the
+  commands that run the tests, lint, and typecheck.
 
 ## Choices left to Build
 

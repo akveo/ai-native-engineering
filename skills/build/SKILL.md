@@ -13,8 +13,8 @@ one pull request.
 The spec holds the product; Build settles the technical side and delivers
 it. Build has two halves:
 
-- **With the human:** check the input, investigate, design the approach, and
-  get it approved. The reviewer is an engineer: make the choices the evidence
+- **With the human:** check the input, design the approach, and get it
+  approved. The reviewer is an engineer: make the choices the evidence
   supports yourself, and bring them the ones where reasonable engineers could
   differ.
 - **Alone, after approval:** plan, run the tasks, review the result. Do not
@@ -72,24 +72,30 @@ approval.
 
 ## Asking questions
 
-Build asks two kinds of questions: product questions about what the result
-does, from step 1, and technical questions about how it is built, from step
-3. Both are asked the same way.
+Most technical choices are not asked: they go into the design as decisions,
+and the engineer reviews them there. Build asks only what the design cannot
+carry:
+
+- **product questions**, from step 1 or found while designing, because their
+  answers belong in the spec;
+- **a fork:** a technical choice whose answer would make a different design,
+  not just a different line in it, such as extending a component or replacing
+  it. A design written down the wrong branch is wasted;
+- **a spike**, which needs a yes before Build runs it.
 
 Ask in rounds: each round asks every open question that does not wait on the
 answer to another. Open the first round with a frame in one or two sentences:
-the outcome for product questions, the approach for technical ones. Number
-each question, give it a short title, and mark it as a product or a technical
-question when a round has both. Put your recommendation on a line of its own,
-and phrase the question so that it proposes the recommendation, so the human
-can take it with a plain "yes". Name the alternatives and what each would
-cost.
+the outcome for product questions, the approach for the others. Number each
+question and give it a short title. Put your recommendation on a line of its
+own, and phrase the question so that it proposes the recommendation, so the
+human can take it with a plain "yes". Name the alternatives and what each
+would cost.
 
-> **Q1. Where the filter runs.** Should the project filter run in the browser
-> on the rows already loaded, like the person search? Filtering on the server
-> would need a new query and a cache change.
+> **Q1. Exporting an empty report.** Should exporting an empty report produce
+> a file with only the header row? Refusing the export instead would need a
+> new error message.
 >
-> → Yes, in the browser.
+> → Yes, a file with only the header row.
 
 A reply such as "all good except 2" accepts the rest. The answers go to
 different places:
@@ -99,11 +105,11 @@ different places:
   answer is the confirmation; the spec is never changed without one, and
   never quietly. The design never holds product answers or lists changes to
   the spec.
-- **Technical answers** become decisions in the design.
+- **Answers to a fork or a spike** become decisions in the design.
 
 ## 1. Check the input
 
-Before investigating how to build, check that the input settles the product:
+Before designing how to build, check that the input settles the product:
 what the outcome is, how it will be checked, and what the product's users, or
 the systems that rely on it, will notice. Build makes technical choices only;
 a product choice made in the design is one nobody agreed to.
@@ -132,24 +138,46 @@ scope, or how the result is checked. Then one of three things happens:
   confirmation would not settle the outcome and its check. Say what is
   missing, suggest running the specify skill on it, and stop.
 
-## 2. Investigate
+## 2. Design
 
-Gather the evidence the design rests on, so that you can decide instead of
-ask, and the facts the tasks will need once Build runs alone. Find what that
-takes, and nothing more:
+Design settles how to build: find the evidence, make the technical choices it
+settles, and bring the human the ones it does not. Write down what you find:
+nothing from this conversation reaches the tasks, only the design and the
+plan do.
 
-- the files, modules, and symbols the change touches;
-- what the change can build on: existing components, helpers, and similar
-  features that already solve part of it, and how they are used today;
-- the tests near the change, and the commands that run the tests, lint, and
-  typecheck. A missing or broken test setup is a risk to raise in the design.
+### Get oriented
 
-Investigation does not end when the design starts: when a design question
-needs more evidence, investigate again before asking.
+Look at where the change lives and what it can build on: the files, modules,
+and symbols it touches, and the existing components, helpers, and similar
+features that already solve part of it, with how they are used today. Note
+whether the change can be tested: a missing or broken test setup is a risk
+for the design. For larger work, subagents can explore separate areas in
+parallel.
 
-When a decision rests on an external fact, such as how a library, an
-external service, or the database behaves, look it up instead of relying on
-memory:
+### Sketch the approach
+
+Say the approach in a few sentences, then list every choice it makes,
+including those that already seemed obvious while getting oriented. A choice
+is any point where the change could reasonably go another way, such as where
+the code goes, what it reuses, how data is stored or moved, and what other
+systems see. The list is for you: it is not shown in the chat or stored, and
+each choice on it is settled below. The approach reaches the human in the
+design's summary, or earlier as the frame of a question.
+
+### Settle each choice
+
+First set aside the choices that need no evidence:
+
+- **Product:** what users will notice. Ask a small one as
+  [Asking questions](#asking-questions) describes and add the answer to the
+  spec; a large one sends the work back to specifying, as in step 1.
+- **Left to the plan:** what the reviewer would not want to agree on, such as
+  naming, internal structure, or the order of tasks.
+
+Settle each technical choice that remains with evidence before deciding or
+asking: the code, the architecture decisions, the spec. When a choice rests
+on an external fact, such as how a library, an external service, or the
+database behaves, look it up instead of relying on memory:
 
 - start from the question and the evidence that would settle it, and stop
   when you have it;
@@ -158,106 +186,109 @@ memory:
 - cite the source with the fact. What you infer but could not confirm is an
   assumption, marked as such, and a candidate for a spike.
 
-For larger work, subagents can explore separate areas in parallel. Write down
-what you find: nothing from this conversation reaches the tasks, only the
-design and the plan do. When you find a problem outside the request, keep it
-out of the change and mention it at approval, so the human can decide what
-to do with it.
+Then each technical choice is one of two kinds:
 
-## 3. Design
+- **Settled by the evidence:** decide it yourself. When there was something
+  to weigh, it is a decision in the design with a short reason. When an
+  existing pattern simply applies, it stays out of the design, unless it falls
+  in one of the design format's areas.
+- **For the engineer:** a choice you may not make alone, whatever the
+  evidence shows: a real trade-off, where the alternatives differ in cost,
+  risk, or how hard they are to reverse and the evidence does not settle it;
+  going against an architecture decision or an established pattern; or a new
+  dependency or pattern in the codebase. Do not ask it: it goes into the
+  design as a decision with your recommendation, the alternatives, and what
+  each costs, and the engineer settles it at approval. Only a fork is asked
+  before writing, as [Asking questions](#asking-questions) describes.
 
-### Trivial changes
+Settling one choice can reveal another: add it to the list.
 
-A change is trivial when it follows an existing pattern in one place, makes no
-choice a reviewer would want to agree on, and touches none of the areas listed
-under "Write the design". For a trivial change, say the approach in one line,
-write it as the summary in `design.md`, and go on to the plan without waiting
-for approval. When in doubt, it is not trivial: ask for approval.
+When a question cannot be settled by talking, such as how slow a query really
+is, say so and propose a short spike instead of guessing. On the engineer's
+yes, run it before writing the design, as long as it only reads or measures
+and changes nothing the change ships; its result settles the choice. A spike
+that needs more goes back to the engineer.
 
-### Decide and ask
-
-Decide yourself what the evidence settles: an existing pattern, an
-architecture decision, a constraint in the code or the spec. These become
-decisions in the design, with a short reason. Evidence settles technical
-choices only. What users will notice is a product question: ask a small one
-in the next round and add the answer to the spec; a large one sends the work
-back to specifying, as in step 1.
-
-Ask the human only about:
-
-- a real trade-off: the alternatives differ in cost, risk, or how hard they
-  are to reverse, and the evidence does not settle it;
-- going against an architecture decision or an established pattern;
-- a new dependency or a new pattern in the codebase.
-
-Ask as [Asking questions](#asking-questions) describes. The rounds end when
-no open question would change the approach. When a question cannot be
-settled by talking, such as how slow a query really is, say so and propose a
-short spike instead of guessing.
-
-Build does not split work; how to split it is a product decision. When the
-change looks too big for one reviewable pull request, say so at approval: the
-human decides whether to go on as one pull request or to send the work back
-to specifying to split it.
+When you find a problem outside the request, keep it out of the change. It
+goes into the plan's progress as deferred, so the human sees it at the end
+and decides what to do with it. A problem the change depends on, such as a
+bug in the code it builds on, is not outside the request: it is a risk in
+the design.
 
 ### Write the design
 
 Read [references/design-format.md](references/design-format.md) and write
-`design.md` once the rounds have ended. When the change touches one of these
-areas, the design addresses it explicitly, however small the change:
-
-- **security and access control:** who can do what, and what changes;
-- **data:** schema changes, migrations, and deleting or transforming data,
-  including how to roll back;
-- **external contracts:** public APIs, integrations, and anything other
-  systems depend on, including compatibility;
-- **building blocks:** the existing components, helpers, and services the
-  change reuses, and any new dependency, pattern, or component, with the
-  reason the existing ones do not fit.
-
-The project's agent instructions may add areas to this list.
+`design.md` once every choice is settled or set out for the engineer. Each of
+the format's areas that the change touches gets its line, however small the
+change.
 
 ### Check the design
 
 A fresh, read-only subagent checks the design before approval, because the
-writer of a design rarely cuts its own text. Give it the design, the spec, the
-design format, and the checklist in
+writer of a design rarely cuts its own text and does not see the choices it
+made without noticing. Give it the design, the spec, the design format, read
+access to the code, and the checklist in
 [references/review.md](references/review.md#design-check). Apply the findings
-once: cut what it marks, and add what it finds missing. When a finding exposes
-a choice for the human, ask it as a new round first.
+once: cut what it marks, and add what it finds missing; a choice it finds
+for the engineer becomes a decision like any other, unless it is a fork:
+ask that one first, as [Asking questions](#asking-questions) describes. A
+design that is only the summary has nothing to cut: skip the check.
 
-## 4. Approve
+## 3. Approve
 
-Link to `design.md` and ask for explicit approval in one message that also
-lists what will change outside the code, so one confirmation covers it:
+Link to `design.md` and ask for explicit approval in one message. The
+engineer approves the decisions there, and the ADRs they mark, or changes
+any of them.
 
-- ADRs to write, for a decision that was chosen over a real alternative,
-  would be costly to change later, and that a future reader could not work
-  out from the code alone. They ship as files in this pull request;
-- problems found outside the request, for the human to follow up;
-- a warning when the change looks too big for one pull request.
+When the change looks too big for one reviewable pull request, say so in the
+message. Build does not split work, because how to split it is a product
+decision: the human decides whether to go on as one pull request or to send
+the work back to specifying to split it.
 
-End the message with: "Approve, and I'll run the rest without you." After
-corrections, update the design and ask again. After approval, ask nothing.
+End by making clear that this is the last point to change the approach:
+after approval, Build runs the rest alone and stops only when a choice
+belongs to someone else, such as "Approve, and I'll run the rest without
+you."
 
-## 5. Write the plan
+The engineer may change decisions in the reply:
+
+- **Picking an alternative the design lists**, when nothing else in the
+  design rests on that decision, approves the design with that choice, such
+  as "all good, but D2 on the server". Update the decision and go on.
+- **Any other change**, such as an option the design does not list or a
+  decision others rest on, means settling the affected choices again and
+  updating the design. When the approach itself changed, check the design
+  again. Then ask for approval again.
+
+After approval, ask nothing.
+
+Skip approval when there is nothing to approve: the design is only the
+summary and the change does not look too big. Then say the approach in one
+line and go on to the plan.
+
+## 4. Write the plan
 
 Read [references/plan-format.md](references/plan-format.md) for the format.
-The plan says what will change in the codebase and how, as a list of tasks:
+First find what the tasks need to run on their own, such as the tests near
+the change and the commands that run the tests, lint, and typecheck; they go
+into the plan's constraints. The plan says what will change in the codebase
+and how, as a list of tasks:
 
 - split the work into the smallest pieces that can each be checked on their
   own;
-- every requirement, design decision, ADR, and glossary change in the spec or
-  the design has a task;
+- every requirement, glossary change, and design decision, and every ADR the
+  design adds, has a task;
 - a coding standard that clearly concerns a task goes into the plan's
   constraints, so the task gets it right the first time;
 - no implementation code: say what changes and where, and leave the code to
   the task. When a task's description grows toward the size of its code, cut
   it back;
 - no choices the reviewer would have wanted to agree on. If the plan needs
-  one, stop: the design needs another look with the human.
+  one, stop: the design needs another look with the human;
+- each problem found outside the request while designing goes into the
+  progress as deferred, with what it is and where.
 
-## 6. Check the plan
+## 5. Check the plan
 
 A fresh, read-only subagent checks the plan before execution. Give it the
 plan, the spec, the design, and the checklist in
@@ -265,7 +296,7 @@ plan, the spec, the design, and the checklist in
 once. If a finding needs a decision, stop: the design needs another look with
 the human.
 
-## 7. Execute the tasks
+## 6. Execute the tasks
 
 Run each task in a fresh subagent that receives only what it needs: the task,
 the plan's constraints, the findings that concern it, what earlier tasks
@@ -297,7 +328,7 @@ If a failure is still there after two attempts to fix it, a third patch
 will not help. Change the approach: give the subagent more context, use a
 stronger model, or split the task. If it still fails, stop.
 
-## 8. Handle what you discover
+## 7. Handle what you discover
 
 | Discovery | Action |
 | --- | --- |
@@ -311,7 +342,7 @@ When Build stops, it leaves its changes in place, records where it stopped in
 the plan's progress, and tells the human what it found, why it stopped, and
 what comes next. Running the skill again resumes from the folder.
 
-## 9. Review the result
+## 8. Review the result
 
 When all tasks are done, run the full test suite, lint, and typecheck, and
 remove code left over from abandoned attempts. Then review the whole change.
@@ -323,10 +354,11 @@ Run two reviews in parallel, each in a fresh, read-only subagent:
 - **Code review:** is the changed code correct, secure, maintainable, and
   consistent with the project and its coding standards?
 
-When the change touches an area the design must address, add a review focused on
-that area. The reviewers see the spec, the design, the project's coding
-standards, and the changes in the working tree, not the plan, so they judge the
-result rather than the intention. Their briefs and the finding format are in
+When the change touches security, data, or an external contract, add a
+review focused on that area; building blocks are left to the code review. The
+reviewers see the spec, the design, the project's coding standards, and the
+changes in the working tree, not the plan, so they judge the result rather
+than the intention. Their briefs and the finding format are in
 [references/review.md](references/review.md).
 
 ### Validate before fixing
@@ -344,13 +376,12 @@ produces no confirmed findings worth fixing; record minor and pre-existing
 findings in the progress. A serious finding that returns after a
 fix points to a problem upstream: stop. After the third round, stop whatever
 remains. Findings about the design or the requirements follow the table in
-step 8.
+step 7.
 
-## 10. Finish
+## 9. Finish
 
 1. Make sure the full test suite, lint, and typecheck pass on the final code.
 2. Mark the plan as finished in its progress.
-3. Update `design.md` to what was built, if the build changed anything.
 
 Do not change the spec after approval. Do not commit or
 open a pull request. End with the outcome in a line or two, a link to

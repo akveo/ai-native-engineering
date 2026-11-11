@@ -6,16 +6,23 @@ the plan check, not the plan.
 
 ## Design check
 
-Inputs: the design, the spec, the design format.
+Inputs: the design, the spec, the design format, and read access to the code.
 
 The design is read by an engineer who has to approve it. Check that:
 
 - every requirement is covered by some part of the approach;
-- every area the design must address is addressed: security and access
-  control, data, external contracts, and building blocks;
+- every area in the design format that the change touches has its line;
 - every decision is a real choice between alternatives, with a reason;
+- every choice the engineer must settle, such as a real trade-off, going
+  against an architecture decision or pattern, or something new, is written
+  with its alternatives and what each costs;
 - no choice the reviewer would want to agree on is left to the plan;
 - the design makes no product choice the spec does not contain.
+
+Then look for what the design leaves silent: the choices that building it
+will force, such as where the code goes, what it reuses, how data is stored
+or moved, and what other systems see. Report each one a reviewer would want
+to agree on and the design does not settle.
 
 Then mark every passage that does not belong:
 
@@ -23,16 +30,15 @@ Then mark every passage that does not belong:
   code enforces, where citing its number would do;
 - product answers or proposed changes to the spec, which belong in the spec;
 - the plan's work: migration lists, column lists, the steps a function or
-  module performs, how work is split;
+  module performs, how work is split, and choices left to the plan;
+- facts no decision rests on;
 - code, schemas, interfaces, file inventories, and code names no decision
   rests on;
 - a "decision" that only adopts what the spec or an existing building block
   already settles.
 
-A design longer than about three pages almost always has such passages, so
-look hardest there. Do not mark a passage only to shorten the design: a real
-choice, its reason, a fact it rests on, and a risk stay, however long the
-design gets.
+Do not mark a passage only to shorten the design: a real choice, its reason,
+a fact it rests on, and a risk stay, however long the design gets.
 
 Report each problem with the passage or decision it concerns and what to
 change. Report nothing when the design is sound.
@@ -84,8 +90,8 @@ it differently.
 
 Inputs: as for the code review, plus the design's section on the area.
 
-Used when the change touches an area the design must address: security and
-access control, data, or an external contract. Check only that area, in
+Used when the change touches security and access control, data, or an
+external contract. Check only that area, in
 depth: who can do what, what happens to existing data and how to roll back,
 or what other systems relying on the contract will see.
 

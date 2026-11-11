@@ -104,8 +104,8 @@ _Avoid_: Purchase, transaction
   names, tests, and proposals.
 - When a term conflicts with the glossary or is vague, say so and propose a
   precise one.
-- Record a settled term in the spec or the design; the glossary itself
-  changes in the pull request that brings the behavior.
+- Record a settled term in the spec; the glossary itself changes in the
+  pull request that brings the behavior.
 - Remove a term when its concept disappears.
 - An agent may propose and edit terms; a human reviews the changes.
 ````
@@ -132,9 +132,9 @@ Decisions are kept as **architecture decision records (ADRs)**, short files
 in `docs/adr/`. Few decisions need one: only those that are hard to reverse,
 surprising without context, and the result of a real trade-off, such as the
 shape of the system, technology with real lock-in, deliberate exclusions, or
-constraints the code does not show. Build drafts an ADR while agreeing the
-approach with the engineer, and it ships in the pull request that brings the
-decision.
+constraints the code does not show. Build marks the decisions that need an
+ADR in the design the engineer approves, and writes them in the pull request
+that brings the decision.
 
 ### Setup
 
